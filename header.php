@@ -152,6 +152,5 @@
 			
 		</div><!-- #masthead -->	
 	</div><!-- #header -->
-	
+
 	<div id="main">
-	
