@@ -1,0 +1,52 @@
+#typo-setup {width:600px}
+
+ 
+	h1 {
+	/*  font-size: 3.2em;  24px --> 24 ÷ 16 = 1.5 */
+		line-height: 1em; /* 24px --> 24 ÷ 24 = 1 */
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	h2 {
+		font-size: 32px;
+		line-height: 40px;
+		margin-bottom:16px;
+		font-family: 'Open Sans', sans-serif;
+	}
+	 
+	h3 {
+		font-size:20px; /* 20px --> 20 ÷ 16 = 1.25 */
+		line-height:20px;
+		margin-bottom:22px;
+		font-family: 'Neuton', serif;
+	}
+
+	h4 {
+		font-size: 12px;
+		line-height: 20px;
+		font-family: 'Neuton', serif;
+}
+
+	h5, h6 {
+		font-family: 'Neuton', serif;
+		font-size: 1em; /* 16px --> 16 ÷ 16 = 1 */
+		line-height: 1.5em; /* 24px --> 24 ÷ 16 = 1.5 */
+	}
+
+
+p {
+		font-family: 'Neuton', serif;
+		font-size:16px;
+		line-height:20px;
+		margin-bottom:0.6em;
+		font-weight:400;
+}
+
+a{ 
+		text-decoration: none;
+}
+
+a:hover
+{
+		text-decoration: none;
+}	

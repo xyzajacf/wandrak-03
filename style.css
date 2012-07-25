@@ -1,0 +1,27 @@
+/*   
+Theme Name: Wandrak Theme 3.0.2
+Theme URI: http://themewandrak-02s.com/wandrak-02/
+Description: Free blog theme for travel blogers. Has nice features as an post devided to Infoboxes, journey preview and custom markers. Theme is builded up on Shape Theme framework.
+Author: Filip Zajac
+Author URI: http://themewandrak-02s.com/
+Version: 0.1.2
+Tags: threaded-comments, microformats
+.
+The Shape Theme for WordPress is copyright ThemeShapes http://themewandrak-02s.com/
+Like WordPress, this work is released under GNU General Public License, version 2 (GPL).
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+.
+*/
+
+
+/* Reset default browser styles */
+@import url('styles/reset.css');
+
+/* Rebuild default browser styles */
+@import url('styles/rebuild.css');
+
+/* Import a basic layout */
+@import url('styles/my-style.css');
+
+/* Basic WordPress Styles */
+@import url('styles/wp.css');
