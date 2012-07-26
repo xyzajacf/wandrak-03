@@ -28,12 +28,13 @@
 		</h2>
 		
 		<div class="entry-meta">
-				
-				<span class="post-month"><?php the_time('M') ?></span>
-				<span class="post-day"><?php the_time('d') ?></span>
-				
-				<div class="longdesc"><?php the_content( __('Continue Reading &rarr;','wandrak-02' ) ); ?>
-				<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'wandrak-02' ) . '&after=</div>') ?></div>
+			<div class="entry-date">
+				<div class="post-day"><?php the_time('d') ?></div>
+				<div class="post-month"><?php the_time('M') ?> – <?php the_time('Y') ?></div>
+			</div>
+			<div class="entry-foto"></div>
+			<div class="longdesc"><?php the_content( __('Continue Reading &rarr;','wandrak-02' ) ); ?>
+			<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'wandrak-02' ) . '&after=</div>') ?></div>
 		</div><!-- .entry-meta -->
 </li>
 

@@ -59,11 +59,11 @@ h1#blog-description{
 	line-height: 33px;
 	font-style: italic;
 	font-weight: normal;
+	letter-spacing:0.005em;
 	padding: 0 24px;
 	margin: 0;
 	width:auto;
 	display:inline;
-	
 }
 
 #access{position:static;top:0;}
@@ -76,21 +76,54 @@ h1#blog-description{
 	padding-right: 30px;
 	padding-top: 33px;
 }
-.entry-title{}
-.entry-meta{}
-.author{}
-.entry-date{
-	height: 80px;
-	left: -113px;
-	position: relative;
-	text-align: center;
-	top: -2px;
-	width: 80px;
+
+.entry-title {
+	margin-bottom: 20px;
+	font-size: 16px;
 }
-.post-day{;position:relative;top:15px;}
-.month-year{position:absolute;width:100%;bottom:0;height: 30px;}
+
+.entry-meta {
+	height: 120px;
+}
+
+.author {}
+
+.entry-date {
+	width:181px;height:120px;
+}
+
+.entry-date:hover, .entry-date:active {
+	opacity:0.0;
+	filter:alpha(opacity=0); /* For IE8 and earlier */
+}
+
+.entry-utility {}
+.vcard {}
 	
-/* widgets layout */
+.post-day{
+	font-family: 'Open Sans',sans-serif;
+	font-size: 55px; line-height: 55px;
+	font-weight: 800;
+	text-align: center;
+	padding: 22px 0 9px;
+	color: #F8611C;
+	background-color: #393730;
+	opacity:0.85;
+	filter:alpha(opacity=85); /* For IE8 and earlier */
+}
+
+.post-month {
+	font-size: 14px;
+	line-height: 22px;
+	font-style: italic;
+	text-align: center;
+	padding: 6px 0 6px;
+	color: #F8611C;
+	background-color: #393730;
+}
+
+	
+/* WIDGETS LAYOUT */
 .widget-area {
 	
 }
@@ -135,22 +168,25 @@ h1#blog-description{
 	bottom: 0;
 	float: left;
 	height: 120px;
-	padding: 31px 27px 15px 0;
 	position: relative;
 	width: 181px;
-	background-color: #393730; 
-	opacity:0.85;
-	filter:alpha(opacity=85); /* For IE8 and earlier */
 }
+
 #locations li:hover, #locations li.hover { 
 	background-color: #E7DED1; 
 	}
+	
 #locations li:hover h3, #locations li.hover h3 {
 	color:red;
 	}
-	
+
+.locations-foto{
+	background-color: #393730; 
+	opacity:0.85;
+	filter:alpha(opacity=85); /* For IE8 and earlier */	
+}		
 #more-info {
-	padding: 44px 48px;
+	padding: 44px 0;
 	position: fixed;
 	top: 242px;
 	width: 576px;
@@ -232,7 +268,6 @@ h1#blog-description{
 /* COLORS OF APPEARANCE */
 body {color:#393730;} /* Color – dark */
 #blog-title a,#primary a{color:#F8611C;text-decoration:none;} /*color – light orange*/
-.entry-date{background-color:#F8611C;text-decoration:none;} /* BCG color – light orange*/
 #blog-title a:hover{color:#fe401e;}
 a {color:#355890;text-decoration:none;}
 a:hover{color:#7597b2} /*color – darker orange*/
@@ -246,7 +281,7 @@ a h2.preview {
 }
 
 /* TYPOGRAPHY */
-body {font-family: 'Neuton', serif;font-size:17px!important;line-height:23px!important;}
+body {font-family: 'Georgia', serif; font-size:16px;line-height:22px;}
 h1 {
 	font-family: 'Open Sans',sans-serif;
 	font-size: 40px;
@@ -271,7 +306,7 @@ h2.preview {
 	font-size: 32px;
 	font-weight: 800;
 	line-height: 33px;
-	margin: 0 0 11px;
+	margin: 0 48px 11px;
 	padding: 0 0 22px;
 	max-height: 133px;
 	overflow: hidden;
@@ -291,31 +326,6 @@ h3, .menu li{
 	line-height: 23px;
 	word-spacing: 1px;
 }
-.entry-title {
-	margin-bottom: 20px;
-	font-size: 16px;
-}
-.entry-utility{font-size:0.8em;line-height:1.485em;}
-.vcard {
-	font-size: 15px;
-	font-style: italic;
-	letter-spacing: 1.3px;
-	margin-top: 3px;
-	padding-left: 5px;
-	position: absolute;
-}
-.post-day{
-	font-family: 'Open Sans',sans-serif;
-	font-size: 55px;
-	font-weight: 800;
-	letter-spacing: -1.5px;
-	color: #F8611C;
-}
-.post-month {
-	color: #F8611C;
-}
-
-.month-year{font-size:0.8em;font-style:italic;letter-spacing:0.06em;}
 
 #wp-calendar td,#wp-calendar tfoot,#wp-calendar tbody,#wp-calendar thead,#wp-calendar {
 	font-family: 'Andale Mono',monospace;
@@ -324,6 +334,10 @@ h3, .menu li{
 
 p {
 	font-style:inherit;
+}
+
+.excerp{
+	padding: 0 48px 11px;
 }
 
 p.excerp {
