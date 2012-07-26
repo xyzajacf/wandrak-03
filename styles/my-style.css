@@ -1,55 +1,83 @@
+/* Grid height 11px width 48px */
+
+/* TO DO ITEMS */
+/* Vyriesit p.excerp aby sa dal nastylovat */
+
 /* BASIC LAYOUT */
 
 #wrapper {}
-#background {position:fixed;top:140px;left:0;bottom:0;right:0;width:100%;height:100%;z-index:-1;overflow:hidden;}
-#map_canvas {width:100%;height:100%;}
-#header {position:fixed;top:0;left:0;right:0;width:100%;min-width:540px;min-height:143px;z-index:800;float:left;}
-#masthead {position:absolute;width:100%;}
-#branding {position:static;padding:20px 20px 10px 20px;max-width:240px;max-height:150px;float:left;}
+
+#background {
+	position:fixed;
+	top: 60px; left:0; bottom:0; right:0;
+	width:100%; height:100%;
+	z-index:-1;
+	overflow:hidden;
+}
+
+#map_canvas {
+	width:100%;height:100%;
+}
+
+#header {
+	position: fixed;
+	top:0;left:0;right:0;
+	width:100%;
+	height:60px;
+	z-index:800;
+	margin: 0;
+	padding: 0;
+	}
+#masthead {
+	width:auto;
+	display:inline;
+}
+
+#branding {
+	position:absolute;
+	padding:11px 0px 11px 0px;
+	display:inline;
+}
+
 #blog-title{
 	font-family: 'Open Sans', sans-serif;
-	font-weight: 800;font-size: 50px;line-height:52px;
-	margin:0px 0px 5px 0px;padding:0px 0px 8px 0px;
-	border-bottom: #e7ded1;
-	border-bottom-style: dashed;
-	border-bottom-width: 1.3px;
-	z-index:810;max-width:240px;
+	font-weight: 800; 
+	font-size: 28px;
+	line-height: 33px; 
 	letter-spacing:-0.03em;
+	z-index:810;
+	padding:0 24px 0 48px;
+	margin: 0;
+	width:auto;
+	display:inline;
+	border-right: 1px solid #E7DED1;
 } 
-#blog-description{
-    font-family: 'Neuton',serif;
-    font-size: 2.2em !important;
-    font-style: italic;
-    font-weight: 300 !important;
-    letter-spacing: 1.3px !important;
-    line-height: 0.8em !important;
-    margin-bottom: 0 !important;
-    margin-left: 7px !important;
-    margin-right: 0 !important;
-    margin-top: 0 !important;
-    word-spacing: -1px !important;
+
+h1#blog-description{
+	font-family: 'Georgia',serif;
+	font-size: 20px;
+	line-height: 33px;
+	font-style: italic;
+	font-weight: normal;
+	padding: 0 24px;
+	margin: 0;
+	width:auto;
+	display:inline;
+	
 }
+
 #access{position:static;top:0;}
 #main {position:absolute;left:0;right:0;}
 #container {}
 #content {}
 .post,.type-page {
-    padding-bottom: 17.5px;
-    padding-left: 33px;
-    padding-right: 30px;
-    padding-top: 33px;
+	padding-bottom: 17.5px;
+	padding-left: 33px;
+	padding-right: 30px;
+	padding-top: 33px;
 }
 .entry-title{}
-.entry-meta{
-    border-bottom-color: #393730;
-    border-bottom-style: dashed;
-    border-bottom-width: 1.3px;
-    border-top-color: #393730;
-    border-top-style: dashed;
-    border-top-width: 1.3px;
-    height: 30px;
-    margin-bottom: 19px;
-}
+.entry-meta{}
 .author{}
 .entry-date{
 	height: 80px;
@@ -88,6 +116,10 @@
 .widget-container ul{list-style-type: none;display: table-header-group;}
 #secondary {list-style-type: none;}
 
+#footer {
+	position:absolute;
+	visibility: hidden;
+}
 
 /*==== List of Posts =====*/
 #locations {
@@ -102,23 +134,33 @@
 #locations li {
 	bottom: 0;
 	float: left;
-	height: 95px;
-	padding: 31px 27px 15px;
+	height: 120px;
+	padding: 31px 27px 15px 0;
 	position: relative;
-	width: 273px;
+	width: 181px;
+	background-color: #393730; 
+	opacity:0.85;
+	filter:alpha(opacity=85); /* For IE8 and earlier */
 }
-#locations li:hover, #locations li.hover { background: #E7DED1 url(images/shadow.png) 128px 0 repeat-y; }
-#locations li:hover h3, #locations li.hover h3 {color:red;}
+#locations li:hover, #locations li.hover { 
+	background-color: #E7DED1; 
+	}
+#locations li:hover h3, #locations li.hover h3 {
+	color:red;
+	}
+	
 #more-info {
-	background: none repeat scroll 0 0 #FFFFFF;
+	padding: 44px 48px;
+	position: fixed;
+	top: 242px;
+	width: 576px;
+	background: none repeat scroll 0 0 #E7DED1;
+	opacity:0.85;
+	filter:alpha(opacity=85); /* For IE8 and earlier */
 	max-height: 45%;
 	float: left;
 	left: 0;
 	overflow: hidden;
-	padding: 35px 30px 5px;
-	position: fixed;
-	top: 150px;
-	width: 30em;
 	z-index: 900;
 }
 .longdesc { display: none; }
@@ -160,14 +202,13 @@
 	padding:0;margin:0;
 }
 #wp-calendar td {
-	#wp-calendar td {
+
 	    line-height: 20px;
 	    padding-bottom: 1px;
 	    padding-left: 0;
 	    padding-right: 0;
 	    padding-top: 1px;
 	    text-align: center;
-	}
 }
 
 
@@ -200,18 +241,21 @@ a:visited{color:#7424037}
 #header,#access a,.month-year,.menu{background-color:#393730;} /*BCG color - dark*/
 .post,.type-page{background-color:#e7ded1;} /*BCG color - light*/
 
+a h2.preview {
+	color:#393730;
+}
 
 /* TYPOGRAPHY */
 body {font-family: 'Neuton', serif;font-size:17px!important;line-height:23px!important;}
 h1 {
 	font-family: 'Open Sans',sans-serif;
-	font-size: 40px !important;
+	font-size: 40px;
 	font-weight: 800;
 	letter-spacing: -1.3px;
-	line-height: 40px !important;
-	margin-left: 0 !important;
-	margin-right: 0 !important;
-	margin-top: -2px !important;
+	line-height: 40px;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: -2px;
 	word-spacing: -2px;
 }
 h2 {
@@ -221,6 +265,22 @@ h2 {
 	line-height: 23px;
 	margin-top: -6px;
 	word-spacing: -2px;
+}
+
+h2.preview {
+	font-size: 32px;
+	font-weight: 800;
+	line-height: 33px;
+	margin: 0 0 11px;
+	padding: 0 0 22px;
+	max-height: 133px;
+	overflow: hidden;
+	border-bottom: 1px dashed #393730;
+}
+
+h2.entry-title {
+	visibility:hidden;
+	position:fixed;
 }
 
 h3, .menu li{
@@ -246,15 +306,28 @@ h3, .menu li{
 }
 .post-day{
 	font-family: 'Open Sans',sans-serif;
-	font-size: 40px;
+	font-size: 55px;
 	font-weight: 800;
 	letter-spacing: -1.5px;
+	color: #F8611C;
 }
+.post-month {
+	color: #F8611C;
+}
+
 .month-year{font-size:0.8em;font-style:italic;letter-spacing:0.06em;}
 
 #wp-calendar td,#wp-calendar tfoot,#wp-calendar tbody,#wp-calendar thead,#wp-calendar {
 	font-family: 'Andale Mono',monospace;
 	font-size: 12px;
+}
+
+p {
+	font-style:inherit;
+}
+
+p.excerp {
+	font-style: italic !important;
 }
 
 /* NAVIGATION | LINKS */
@@ -283,7 +356,7 @@ h3, .menu li{
 	position:fixed;
 	bottom: 5px;
 	left: 0px;
-	height: 140px;
+	height: 120px;
 	z-index: 1;
 	width: 100%;
 	vertical-align: middle;
@@ -295,7 +368,9 @@ h3, .menu li{
 	margin-right:auto;
 }
 
-#carousel {margin-top:2em;border:0;}
+#carousel {
+	border:0;
+}
 #carousel ul {overflow:hidden;padding:0;zoom:1;}
 #carousel ul li {display:inline;float:left;margin:0 2px 0 0;list-style:none;}
 
