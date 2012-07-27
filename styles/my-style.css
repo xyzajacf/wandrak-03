@@ -186,19 +186,20 @@ h1#blog-description{
 	filter:alpha(opacity=85); /* For IE8 and earlier */	
 }		
 #more-info {
-	padding: 44px 0;
+	float: left;
 	position: fixed;
 	top: 242px;
+	left: 0;
 	width: 576px;
+	max-height: 45%;
+	padding: 44px 0 22px;
+	overflow: hidden;
 	background: none repeat scroll 0 0 #E7DED1;
+	z-index: 900;
 	opacity:0.85;
 	filter:alpha(opacity=85); /* For IE8 and earlier */
-	max-height: 45%;
-	float: left;
-	left: 0;
-	overflow: hidden;
-	z-index: 900;
 }
+
 .longdesc { display: none; }
 
 /* WP CALENDAR from Wandrak WP-Theme 01*/
@@ -313,6 +314,14 @@ h2.preview {
 	border-bottom: 1px dashed #393730;
 }
 
+h2.preview a {
+	color: #393730;
+}
+
+h2.preview a:hover, h2.preview a:active {
+	color: #5A4031;
+}
+
 h2.entry-title {
 	visibility:hidden;
 	position:fixed;
@@ -333,16 +342,21 @@ h3, .menu li{
 }
 
 p {
-	font-style:inherit;
+	font-height: 16px;
+	line-height: 22px;
+	margin: 0;
+	padding: 0 0 11px;
 }
 
-.excerp{
-	padding: 0 48px 11px;
+p.a {
+	color: #000;
 }
 
-p.excerp {
+.excerpt{
+	padding: 0 48px;
 	font-style: italic !important;
 }
+
 
 /* NAVIGATION | LINKS */
 
