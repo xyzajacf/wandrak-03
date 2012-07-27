@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+	<head>
+
+		<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="../js/underscore-min.js"></script>
+
+		<script type="text/javascript">
+			var wnd_ctaLayer = null;
+			var map = null;
+			var markerModel = {};
+			var maxMarkerId = 1;
+
+		    var marker_bubble_template;
+
+			 $(function() {
+				 marker_bubble_template = _.template($("#marker_bubble_template").html());
+			
+				var europe = new google.maps.LatLng(46.980252,16.54541),
+				    pointToMoveTo, 
+				    first = true,
+				    curMarker = new google.maps.Marker({}),
+				    $el;
+				
+				var myOptions = {
+				    zoom: 8,
+				    center: europe,
+				    mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				map = new google.maps.Map($("#map_canvas")[0], myOptions);
+	
+				google.maps.event.addListener(map, 'click', function(event) {
+					if (addingMapPoint) {
+					    placeMarker(event.latLng);
+					    addingMapPoint = false;
+					}
+				});
+	
+				// Inside post show kml
+				if ($(".wnd_post_data").size() > 0) {
+				            wnd_ctaLayer = new google.maps.KmlLayer($(".wnd_post_data").data('kml'));
+				            wnd_ctaLayer.setMap(map);
+				}
+				
+				// Main page, handle mouse hover
+				$("#locations li").mouseenter(function() {
+				
+				         $el = $(this);
+				         if (wnd_ctaLayer) {
+				            wnd_ctaLayer.setMap(null);
+				         }
+				         if ($el.data('kml')) {
+				            wnd_ctaLayer = new google.maps.KmlLayer($el.data('kml'));
+				            wnd_ctaLayer.setMap(map);
+				         }
+				
+				    $("#more-info")
+				      .find("h2")
+				        .html($el.find("h2").html())
+				        .end()
+				      .find(".excerpt")
+				        .html($el.find(".longdesc").html());
+				});
+				
+				$("#locations li:first").trigger("mouseenter");
+
+				$('#addMapPoint').click(function () {
+					addingMapPoint = true;
+				});
+			 });
+
+			function placeMarker(location) {
+				var markerObj = { markerId: maxMarkerId, title: '', descr: '', location: location };
+				markerModel[markerObj.markerId] = markerObj;
+				maxMarkerId++;
+
+				var marker = new google.maps.Marker({
+					position: location,
+					map: map,
+					draggable: true,
+					clickable: true
+				});
+				marker.markerId = markerObj.markerId;
+
+				google.maps.event.addListener(marker, "click", function() {
+					if (mapPointInfoWindow) {
+						mapPointInfoWindow.close();
+					}
+					mapPointInfoWindow = new google.maps.InfoWindow({content: 'Loading...'});
+					mapPointInfoWindow.setContent(marker_bubble_template(markerObj));
+					mapPointInfoWindow.open(map, this);
+
+					google.maps.event.addListener(mapPointInfoWindow, "domready", function() {
+						var markerEl = $("#bmarkerInfoWindow" + marker.markerId);
+						markerEl.find('.mbubble_ok').click(function () {
+							markerObj.title = markerEl.find('.mbubble_title').val();
+							markerObj.descr = markerEl.find('.mbubble_descr').val();
+							mapPointInfoWindow.close();
+						});
+						markerEl.find('.mbubble_cancel').click(function () {
+							mapPointInfoWindow.close();
+						});
+						markerEl.find('.mbubble_remove').click(function () {
+							delete markerModel[marker.markerId];
+							marker.setMap(null);
+							mapPointInfoWindow.close();
+						});
+					});
+				});
+			}
+
+			var mapPointInfoWindow = null;
+			var addingMapPoint = false;
+		</script>
+
+		<script type="text/html" id="marker_bubble_template">
+			<div id="bmarkerInfoWindow<%= markerId %>">
+				title: <input type="text" class="mbubble_title" value="<%= title %>"></input><br/>
+				text: <textarea class="mbubble_descr"><%= descr %></textarea><br/>
+				<input type="button" value="OK" class="mbubble_ok"></input>
+				<input type="button" value="Cancel" class="mbubble_cancel"></input>
+				<input type="button" value="Remove" class="mbubble_remove"></input>
+			</div>
+		</script>
+
+	    <style type="text/css">
+			#background {
+				position:fixed;
+				top: 60px; left:0; bottom:0; right:0;
+				width:100%; height:100%;
+				z-index:-1;
+				overflow:hidden;
+			}
+
+			#map_canvas {
+				width:100%;height:100%;
+			}
+		</style>
+
+	</head>
+
+
+	<div id="background">
+		  <div id="map_canvas" style="width:100%; height:100%;"></div>
+	</div>
+	<body>
+		<input type="button" id="addMapPoint" value="Add point"/>
+	</body>
+
+</html>
