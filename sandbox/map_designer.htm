@@ -13,12 +13,13 @@
 			var markerModel = {};
 			var maxMarkerId = 1;
 
-		    var marker_bubble_template;
+			var marker_bubble_template;
+			var GET_PAGE_URL = 'http://wandrak.ideoci.eu/?json=get_page'
 
 			 $(function() {
 				 marker_bubble_template = _.template($("#marker_bubble_template").html());
-			
-				var europe = new google.maps.LatLng(46.980252,16.54541),
+
+				var europe = new google.maps.LatLng(46.980252, 16.54541),
 				    pointToMoveTo, 
 				    first = true,
 				    curMarker = new google.maps.Marker({}),
@@ -34,46 +35,25 @@
 	
 				google.maps.event.addListener(map, 'click', function(event) {
 					if (addingMapPoint) {
-					    placeMarker(event.latLng);
+					    placeMarker('', '', event.latLng);
 					    addingMapPoint = false;
 					}
 				});
-	
+				initMarkers(2);
+
 				// Inside post show kml
 				if ($(".wnd_post_data").size() > 0) {
 				            wnd_ctaLayer = new google.maps.KmlLayer($(".wnd_post_data").data('kml'));
 				            wnd_ctaLayer.setMap(map);
 				}
-				
-				// Main page, handle mouse hover
-				$("#locations li").mouseenter(function() {
-				
-				         $el = $(this);
-				         if (wnd_ctaLayer) {
-				            wnd_ctaLayer.setMap(null);
-				         }
-				         if ($el.data('kml')) {
-				            wnd_ctaLayer = new google.maps.KmlLayer($el.data('kml'));
-				            wnd_ctaLayer.setMap(map);
-				         }
-				
-				    $("#more-info")
-				      .find("h2")
-				        .html($el.find("h2").html())
-				        .end()
-				      .find(".excerpt")
-				        .html($el.find(".longdesc").html());
-				});
-				
-				$("#locations li:first").trigger("mouseenter");
 
 				$('#addMapPoint').click(function () {
 					addingMapPoint = true;
 				});
 			 });
 
-			function placeMarker(location) {
-				var markerObj = { markerId: maxMarkerId, title: '', descr: '', location: location };
+			function placeMarker(title, description, location) {
+				var markerObj = { markerId: maxMarkerId, title: title, descr: description, location: location };
 				markerModel[markerObj.markerId] = markerObj;
 				maxMarkerId++;
 
@@ -112,6 +92,39 @@
 				});
 			}
 
+			function initMarkers(parentPageId) {
+				initMarkersSuccess(testResponseData);
+/*
+				var url = GET_PAGE_URL + '&children=1&page_id=' + parentPageId;
+				
+				$.ajax({
+				    url: url,
+				    type: 'GET',
+				    dataType: 'json',
+				    success: initMarkersSuccess,
+				    error: initMarkersError
+				});
+*/
+			}
+
+			var testResponseData = {"status":"ok","page":{"id":2,"type":"page","slug":"ukazka-strany","url":"http:\/\/wandrak.ideoci.eu\/?page_id=2","status":"publish","title":"Uk\u00e1\u017eka strany","title_plain":"Uk\u00e1\u017eka strany","content":"<p>Toto je pr\u00edklad str\u00e1nky. Je odli\u0161n\u00e1 od \u010dl\u00e1nku blogu, preto\u017ee ostane na jednom mieste a objav\u00ed sa v navig\u00e1cii va\u0161ej str\u00e1nky (vo v\u00e4\u010d\u0161ine t\u00e9m). V\u00e4\u010d\u0161ina \u013eud\u00ed za\u010d\u00edna str\u00e1nkou O mne, ktor\u00e1 ich predstavuje potenci\u00e1lnym n\u00e1v\u0161tevn\u00edkom webu. M\u00f4\u017ee na nej by\u0165 nie\u010do ako:<\/p>\n<blockquote><p>Ahoj! Cez de\u0148 som posl\u00ed\u010dek na bicykli, v noci n\u00e1dejn\u00fd herec a toto je m\u00f4j blog. B\u00fdvam v Los Angeles, m\u00e1m skvel\u00e9ho psa menom Jack a m\u00e1m r\u00e1d Pi\u00f1a Coladu.<\/p><\/blockquote>\n<p>&#8230;alebo nie\u010do ako toto:<\/p>\n<blockquote><p>Spolo\u010dnos\u0165 XYZ Doohickey bola zalo\u017een\u00e1 v roku 1971 a odvtedy poskytuje verejnosti kvalitn\u00e9 &#8220;ve\u013ek\u00e9 ni\u010d&#8221;. Nach\u00e1dza sa v Gotham City, XYZ zamestn\u00e1va viac ako 2000 \u013eud\u00ed a rob\u00ed v\u0161etky druhy \u00fa\u017easn\u00fdch vec\u00ed pre obec Gotham.<\/p><\/blockquote>\n<p>Ako nov\u00fd pou\u017e\u00edvate\u013e WordPress by ste mali prejs\u0165 do <a href=\"http:\/\/wandrak.ideoci.eu\/wp-admin\/\">administr\u00e1cie<\/a>, odstr\u00e1ni\u0165 t\u00fato stranu a vytvori\u0165 pre v\u00e1\u0161 web nov\u00e9 strany. Bavte sa!<\/p>\n","excerpt":"Toto je pr\u00edklad str\u00e1nky. Je odli\u0161n\u00e1 od \u010dl\u00e1nku blogu, preto\u017ee ostane na jednom mieste a objav\u00ed sa v navig\u00e1cii va\u0161ej str\u00e1nky (vo v\u00e4\u010d\u0161ine t\u00e9m). V\u00e4\u010d\u0161ina \u013eud\u00ed za\u010d\u00edna str\u00e1nkou O mne, ktor\u00e1 ich predstavuje potenci\u00e1lnym n\u00e1v\u0161tevn\u00edkom webu. M\u00f4\u017ee na nej by\u0165 nie\u010do ako: Ahoj! Cez de\u0148 som posl\u00ed\u010dek na bicykli, v noci n\u00e1dejn\u00fd herec a toto [...]","date":"2012-07-03 16:15:12","modified":"2012-07-03 16:15:12","categories":[],"tags":[],"author":{"id":1,"slug":"filipkoxy","name":"filipkoxy","first_name":"Filip","last_name":"Zajac","nickname":"filipkoxy","url":"","description":""},"comments":[],"attachments":[],"comment_count":0,"comment_status":"open","children":[{"id":39,"type":"page","slug":"str-sub","url":"http:\/\/wandrak.ideoci.eu\/?page_id=39","status":"publish","title":"str sub","title_plain":"str sub","content":"<p>xxxxx<\/p>\n","excerpt":"xxxxx","date":"2012-07-03 16:15:12","modified":"2012-07-27 13:01:59","categories":[],"tags":[],"author":{"id":2,"slug":"pista","name":"pista","first_name":"","last_name":"","nickname":"pista","url":"","description":""},"comments":[],"attachments":[],"comment_count":0,"comment_status":"open","children":[]}]}};
+			function initMarkersSuccess(data) {
+				if (data.status == 'ok') {
+					var page = data.page;
+					$('#top_box').append('<b>' + page.title + '</b>');
+					//'<p>' + page.content + '</p>'
+					$.each(page.children, function (key, childData) {
+						placeMarker(childData.title, childData.content, new google.maps.LatLng(46.980252,16.54541));
+					});
+					return;
+				}
+				alert('Failed to read data!');
+			}
+
+			function initMarkersError(param) {
+				alert('Failed to read data!');
+			}
+
 			var mapPointInfoWindow = null;
 			var addingMapPoint = false;
 		</script>
@@ -147,7 +160,9 @@
 		  <div id="map_canvas" style="width:100%; height:100%;"></div>
 	</div>
 	<body>
-		<input type="button" id="addMapPoint" value="Add point"/>
+		<span id="top_box">
+			<input type="button" id="addMapPoint" value="Add point"/>
+		</span>
 	</body>
 
 </html>
