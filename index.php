@@ -10,7 +10,25 @@
     		$("#carousel .carousel-wrap").outerWidth() + controlsWidthAdd);
     });
 </script>
-	
+
+<?php
+	query_posts("post_type=page&post_parent=0");
+/*
+	foreach ($trips as $trip) {
+		print($trip->post_title);
+		print(" ");
+		print($trip->post_content);
+		if (get_post_custom_values('kml', $trip->ID)) {
+			print(get_post_custom_values('kml', $trip->ID)[0]);
+		}
+		print(" ");
+		print(the_permalink($trip->ID)):
+	}
+*/
+
+	//get_pages(array());
+?>
+
 		<div id="container">	
 			<div id="content">
 		

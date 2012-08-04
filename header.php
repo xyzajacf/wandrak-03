@@ -27,6 +27,7 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <!--<script src="<?php echo get_template_directory_uri(); ?>/js/map-init.js" type="text/javascript"></script> -->
 <script src="<?php echo get_template_directory_uri(); ?>/js/jcarousel.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/underscore-min.js"></script>
 
 <script type="text/javascript">
   var wnd_ctaLayer = null;
@@ -45,7 +46,7 @@
 	    mapTypeId: google.maps.MapTypeId.ROADMAP
 	  };
 	
-	var map = new google.maps.Map($("#map_canvas")[0], myOptions);
+	map = new google.maps.Map($("#map_canvas")[0], myOptions);
 
 	// Inside post show kml
 	if ($(".wnd_post_data").size() > 0) {
@@ -119,7 +120,9 @@
 	});
 	
 	$("#locations li:first").trigger("mouseenter");
-	
+	if (typeof onReadyLocal == 'function') {
+		onReadyLocal();
+	}
   });
 
 </script>
@@ -149,9 +152,12 @@
 				<div class="skip-link"><a href="#content" title="<?php _e( 'Skip to content', 'wandrak-02' ) ?>"><?php _e( 'Skip to content', 'wandrak-02' ) ?></a></div>
 				<?php wp_page_menu( 'sort_column=menu_order' ); ?>			
 			</div><!-- #access -->
+
+			<div id="editorTools">
+				<input type="button" value="Add poi" class="add_poi_button"/>
+			</div>
 			
 		</div><!-- #masthead -->	
 	</div><!-- #header -->
 
 	<div id="main">
-Ahoj

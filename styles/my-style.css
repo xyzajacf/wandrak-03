@@ -39,6 +39,14 @@
 	display:inline;
 }
 
+#editorTools {
+	left: 250px;
+	top: 20px;
+	position:absolute;
+	padding:11px 0px 11px 0px;
+	display:none;
+}
+
 #blog-title{
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 800; 
