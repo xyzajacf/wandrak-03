@@ -6,7 +6,9 @@
 	var maxMarkerId = 1;
 
 	var marker_bubble_template;
-	var GET_PAGE_URL = '<?php $BASE_URL ?>/?json=get_page'
+	var GET_PAGE_URL = '<?php $BASE_URL ?>/?json=get_page';
+	var WRITE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&status=publish&type=page&na=1';
+	var DELETE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&delete=1';
 
 	var onReadyLocal = function() {
 		 marker_bubble_template = _.template($("#marker_bubble_template").html());
@@ -55,6 +57,7 @@
 
 			google.maps.event.addListener(mapPointInfoWindow, "domready", function() {
 				var markerEl = $("#bmarkerInfoWindow" + marker.markerId);
+				markerEl.find('.mbubble_title').focus();
 				markerEl.find('.mbubble_ok').click(function () {
 					markerObj.title = markerEl.find('.mbubble_title').val();
 					markerObj.descr = markerEl.find('.mbubble_descr').val();
@@ -71,6 +74,11 @@
 					mapPointInfoWindow.close();
 				});
 			});
+		});
+
+		google.maps.event.addListener(marker, 'dragend', function() {
+			markerObj.location = marker.getPosition();
+			updateSaveMarkerAsync(markerObj);
 		});
 	}
 
@@ -90,7 +98,11 @@
 		if (data.status == 'ok') {
 			var page = data.page;
 			$.each(page.children, function (key, childData) {
-				placeMarker(childData.id, childData.title, childData.content, new google.maps.LatLng(46.980252,16.54541));
+				var location = defaultLocation;
+				if (childData.custom_fields && childData.custom_fields['lat'] && childData.custom_fields['lng']) {
+					location = new google.maps.LatLng(childData.custom_fields['lat'], childData.custom_fields['lng']);
+				}
+				placeMarker(childData.id, childData.title, childData.contentStripped, location);
 			});
 			return;
 		}
@@ -105,31 +117,61 @@
 	var addingMapPoint = false;
 
 	function updateSaveMarkerAsync(markerObj) {
-		var url = GET_PAGE_URL + '&children=1&page_id=' + parentPageId;
+		var parentPostId = $("#content").data('postid');
+		var url = WRITE_PAGE_URL
+						+ '&title=' + markerObj.title
+						+ '&content=' + markerObj.descr
+						+ '&id=' + markerObj.postId
+						+ '&markerId=' + markerObj.markerId
+						+ '&lat=' + markerObj.location.lat()
+						+ '&lng=' + markerObj.location.lng()
+						+ '&parent_id=' + parentPostId;
 
-		
 		$.ajax({
 		    url: url,
 		    type: 'GET',
 		    dataType: 'json',
-		    success: initMarkersSuccess,
-		    error: initMarkersError
+		    success: updateMarkersSuccess,
+		    error: updateMarkersError
 		});
-		// responds with status: ok, posts: {id: ..}
+	}
+
+	function updateMarkersSuccess(data) {
+		if (data.status == 'ok') {
+			markerModel[data.markerId].postId = data.post.id;
+			return;
+		}
+		alert('Failed to update marker!');
+	}
+
+	function updateMarkersError() {
+		alert('Failed to update marker!');
 	}
 
 	function removeMarkerAsync(markerObj) {
 		if (markerObj.postId) {
-			var url = GET_PAGE_URL + '&children=1&page_id=' + parentPageId;
+			var url = DELETE_PAGE_URL
+						+ '&postId=' + markerObj.postId;
 
 			$.ajax({
-			    url: url,
+		    	url: url,
 			    type: 'GET',
 			    dataType: 'json',
-			    success: initMarkersSuccess,
-			    error: initMarkersError
+			    success: removeMarkersSuccess,
+			    error: removeMarkersError
 			});
 		}
+	}
+
+	function removeMarkersSuccess(data) {
+		if (data.status == 'ok') {
+			return;
+		}
+		alert('Failed to remove marker!');
+	}
+
+	function removeMarkersError() {
+		alert('Failed to remove marker!');
 	}
 
 </script>

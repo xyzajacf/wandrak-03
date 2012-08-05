@@ -31,6 +31,7 @@
 
 <script type="text/javascript">
   var wnd_ctaLayer = null;
+  var defaultLocation = new google.maps.LatLng(46.980252,16.54541);
 
   $(function() {
 	
