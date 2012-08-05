@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 <head profile="http://gmpg.org/xfn/11">
     <title><?php
-        if ( is_single() ) { single_post_title(); }       
+        if ( is_single() ) { single_post_title(); }
         elseif ( is_home() || is_front_page() ) { bloginfo('name'); print ' | '; bloginfo('description'); get_page_number(); }
         elseif ( is_page() ) { single_post_title(''); }
         elseif ( is_search() ) { bloginfo('name'); print ' | Search results for ' . wp_specialchars($s); get_page_number(); }
@@ -13,6 +13,7 @@
 	<meta http-equiv="content-type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 	
 	<link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/styles/jquery.jscrollpane.css" />
 	
 	<?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 	
@@ -25,17 +26,20 @@
 <!-- JS Google Maps API -->
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<!--<script src="<?php echo get_template_directory_uri(); ?>/js/map-init.js" type="text/javascript"></script> -->
-<script src="<?php echo get_template_directory_uri(); ?>/js/jcarousel.js" type="text/javascript"></script>
+<!--script src="<?php echo get_template_directory_uri(); ?>/js/map-init.js" type="text/javascript"></script-->
+<!--script src="<?php echo get_template_directory_uri(); ?>/js/jcarousel.js" type="text/javascript"></script-->
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/underscore-min.js"></script>
+
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.jscrollpane.min.js"></script>
 
 <script type="text/javascript">
   var wnd_ctaLayer = null;
-  var defaultLocation = new google.maps.LatLng(46.980252,16.54541);
+  var defaultLocation = new google.maps.LatLng(46.980252, 16.54541);
 
   $(function() {
-	
-	var europe = new google.maps.LatLng(46.980252,16.54541),
+
+	var europe = new google.maps.LatLng(46.980252, 16.54541),
 	    pointToMoveTo, 
 	    first = true,
 	    curMarker = new google.maps.Marker({}),
@@ -46,86 +50,13 @@
 	    center: europe,
 	    mapTypeId: google.maps.MapTypeId.ROADMAP
 	  };
-	
+
 	map = new google.maps.Map($("#map_canvas")[0], myOptions);
 
-	// Inside post show kml
-	if ($(".wnd_post_data").size() > 0) {
-             wnd_ctaLayer = new google.maps.KmlLayer($(".wnd_post_data").data('kml'));
-             wnd_ctaLayer.setMap(map);
-	}
-
-	// Main page, handle mouse hover
-	$("#locations li").mouseenter(function() {
-
-          $el = $(this);
-          if (wnd_ctaLayer) {
-             wnd_ctaLayer.setMap(null);
-          }
-          if ($el.data('kml')) {
-             wnd_ctaLayer = new google.maps.KmlLayer($el.data('kml'));
-             wnd_ctaLayer.setMap(map);
-          }
-
-	    $("#more-info")
-	      .find("h2")
-	        .html($el.find("h2").html())
-	        .end()
-	      .find(".excerpt")
-	        .html($el.find(".longdesc").html());
-
-
-/*	          
-	  if (!$el.hasClass("hover")) {
-	  
-	    $("#locations li").removeClass("hover");
-	    $el.addClass("hover");
-	  
-	    if (!first) { 
-	      
-	      // Clear current marker
-	      curMarker.setMap(); 
-	      
-	      // Set zoom back to Chicago level
-	      // map.setZoom(10);
-	    }
-	    
-	    // Move (pan) map to new location
-	   pointToMoveTo = new google.maps.LatLng($el.attr("data-geo-lat"), $el.attr("data-geo-long"));
-	    map.panTo(pointToMoveTo);
-	    
-	    // Add new marker
-	    curMarker = new google.maps.Marker({
-	        position: pointToMoveTo,
-	        map: map,
-	        icon: "images/marker.png"
-	    });
-	    
-	    // On click, zoom map
-	    google.maps.event.addListener(curMarker, 'click', function() {
-	       map.setZoom(14);
-	    });
-	    
-	    // Fill more info area
-	    $("#more-info")
-	      .find("h2")
-	        .html($el.find("h2").html())
-	        .end()
-	      .find(".excerpt")
-	        .html($el.find(".longdesc").html());
-	    
-	    // No longer the first time through (re: marker clearing)        
-	    first = false; 
-	  }
-*/	  
-	});
-	
-	$("#locations li:first").trigger("mouseenter");
 	if (typeof onReadyLocal == 'function') {
 		onReadyLocal();
 	}
   });
-
 </script>
 
 

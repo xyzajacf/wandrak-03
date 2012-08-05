@@ -1,78 +1,103 @@
 <?php get_header(); ?>
 
 <script type="text/javascript">
+	var scrollingIndex = 0;
+	var bottomBarApi;
+	var scrolledToLast = false;
+
     $(function() {
-    	var controlsWidthAdd = 82;
-    	var itemsPerPage = Math.floor(($("#carousel_holder").width() - controlsWidthAdd) / $("#carousel li").outerWidth());
-    	$("<style type='text/css'> .carousel-wrap { width: " + (itemsPerPage * $("#carousel li").outerWidth()) + "px; } </style>").appendTo("head");
-        $("#carousel").carousel( { dispItems: itemsPerPage } );
-    	$("#carousel").width(
-    		$("#carousel .carousel-wrap").outerWidth() + controlsWidthAdd);
+		$("#locations_left_area").click(function () {
+			if (0 <= scrollingIndex - 1 && !scrolledToLast) {
+				scrollingIndex--;
+			}
+			scrolledToLast = false;
+			bottomBarApi.scrollToElement($(".bottom_bar_item")[scrollingIndex], true, true);
+		});
+		$("#locations_right_area").click(function () {
+			var currentItem = $($(".bottom_bar_item")[scrollingIndex]);
+			var lastItemRightX = $(".bottom_bar_item").last().position().left + $(".bottom_bar_item").last().width();
+			if (lastItemRightX
+					< bottomBarApi.getContentPositionX() + currentItem.width() + $("#bottom_bar").width()) {
+				scrolledToLast = true;
+				bottomBarApi.scrollToX(lastItemRightX - $("#bottom_bar").width(), true);
+			} else {
+				if (scrollingIndex + 1 <= $(".bottom_bar_item").size()) {
+					scrollingIndex++;
+					currentItem = $($(".bottom_bar_item")[scrollingIndex]);
+				}
+				scrolledToLast = false;
+				bottomBarApi.scrollToElement(currentItem, true, true);
+			}
+		});
+		$("#bottom_bar").jScrollPane({
+			showArrows: false,
+			animateScroll: true
+		});
+		bottomBarApi = $("#bottom_bar").data('jsp');
+		$("div.jspPane").css("margin-left", "0px");
+
+		// index - mouse hovers
+		$(".bottom_bar_item").mouseenter(function() {
+	          $el = $(this);
+	          if (wnd_ctaLayer) {
+	             wnd_ctaLayer.setMap(null);
+	          }
+	          if ($el.data('kml')) {
+	             wnd_ctaLayer = new google.maps.KmlLayer($el.data('kml'));
+	             wnd_ctaLayer.setMap(map);
+	          }
+	
+		    $("#more-info")
+		      .find("h2")
+		        .html($el.find("h2").html())
+		        .end()
+		      .find(".excerpt")
+		        .html($el.find(".longdesc").html());
+		});
+
+		$("#bottom_content .bottom_bar_item:first").trigger("mouseenter");
     });
 </script>
 
 <?php
 	query_posts("post_type=page&post_parent=0");
-/*
-	foreach ($trips as $trip) {
-		print($trip->post_title);
-		print(" ");
-		print($trip->post_content);
-		if (get_post_custom_values('kml', $trip->ID)) {
-			print(get_post_custom_values('kml', $trip->ID)[0]);
-		}
-		print(" ");
-		print(the_permalink($trip->ID)):
-	}
-*/
-
-	//get_pages(array());
 ?>
 
-		<div id="container">	
-			<div id="content">
-		
-		<div id="carousel_holder">
-			<div id="carousel">
-<ul id="locations">
-
-<?php while ( have_posts() ) : the_post() ?>
-<li data-kml="<?php if (get_post_custom_values('kml')) { $myKml = get_post_custom_values('kml'); echo $myKml[0]; } ?>">
-		
-		<h2 class="entry-title">
-			<a href="<?php the_permalink(); ?>" title="<?php printf( __('Permalink to %s', 'wandrak-02'), the_title_attribute('echo=0') ); ?>">
-				<?php printf( __('Permalink to %s', 'wandrak-02'), the_title_attribute('echo=0') ); ?>
-			</a>
-		</h2>
-		
-		<div class="entry-meta">
-			<div class="entry-date">
-				<div class="post-day"><?php the_time('d') ?></div>
-				<div class="post-month"><?php the_time('M') ?> – <?php the_time('Y') ?></div>
-			</div>
-			<div class="entry-foto"></div>
-			<div class="longdesc"><?php the_content( __('Continue Reading &rarr;','wandrak-02' ) ); ?>
-			<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'wandrak-02' ) . '&after=</div>') ?></div>
-		</div><!-- .entry-meta -->
-</li>
-
-<!-- #entry-content -->
-
-
-				
-<?php comments_template(); ?>
+	<div id="container">
+		<div id="content">
+			<div id="locations_left_area"></div>
+			<div id="locations_right_area"></div>
+			<div id="bottom_bar">
+				<div id="bottom_content">
+					<?php while ( have_posts() ) : the_post() ?>
+						<article class="bottom_bar_item" data-kml="<?php if (get_post_custom_values('kml')) { $myKml = get_post_custom_values('kml'); echo $myKml[0]; } ?>">
+							<p>
+								<a href="<?php the_permalink(); ?>" title="<?php printf( __('Permalink to %s', 'wandrak-02'), the_title_attribute('echo=0') ); ?>">
+									<?php printf( __('Permalink to %s', 'wandrak-02'), the_title_attribute('echo=0') ); ?>
+								</a>
 	
-<?php endwhile; ?>		
+								<span class="post-day"><?php the_time('d') ?></span>
+								<span class="post-month"><?php the_time('M') ?> – <?php the_time('Y') ?></span>
+								<div class="entry-meta">
+									<h2 class="entry-title"><?php the_title() ?></h2>
+									<div class="entry-date">
+									</div>
+									<div class="entry-foto"></div>
+									<div class="longdesc"><?php the_content( __('Continue Reading &rarr;','wandrak-02' ) ); ?>
+									<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'wandrak-02' ) . '&after=</div>') ?></div>
+								</div><!-- .entry-meta -->
+							</p>
+						</article>
+					<?php endwhile; ?>
+				</div>
+			</div>
 
-</ul>
-</div>
-</div>
-<div id="more-info">
-					<h2 class="preview"></h2>
-					<div class="excerpt"></div>
-</div>			
-			</div><!-- #content -->		
-		</div><!-- #container -->
+			<div id="more-info">
+				<h2 class="preview"></h2>
+				<div class="excerpt"></div>
+			</div>			
+		</div><!-- #content -->		
+	</div><!-- #container -->
 
 		
 <?php get_sidebar(); ?>	
