@@ -177,7 +177,7 @@
 </script>
 
 <script type="text/html" id="marker_bubble_template">
-	<div id="bmarkerInfoWindow<%= markerId %>">
+	<div id="bmarkerInfoWindow<%= markerId %>" class="poi_info_window">
 		title: <input type="text" class="mbubble_title" value="<%= title %>"></input><br/>
 		text: <textarea class="mbubble_descr"><%= descr %></textarea><br/>
 		<input type="button" value="OK" class="mbubble_ok"></input>
