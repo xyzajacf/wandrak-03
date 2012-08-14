@@ -6,14 +6,14 @@
 	var scrolledToLast = false;
 
     $(function() {
-		$("#locations_left_area").click(function () {
+		$("#bottom_bar_left_area").click(function () {
 			if (0 <= scrollingIndex - 1 && !scrolledToLast) {
 				scrollingIndex--;
 			}
 			scrolledToLast = false;
 			bottomBarApi.scrollToElement($(".bottom_bar_item")[scrollingIndex], true, true);
 		});
-		$("#locations_right_area").click(function () {
+		$("#bottom_bar_right_area").click(function () {
 			var currentItem = $($(".bottom_bar_item")[scrollingIndex]);
 			var lastItemRightX = $(".bottom_bar_item").last().position().left + $(".bottom_bar_item").last().width();
 			if (lastItemRightX
@@ -63,7 +63,6 @@
 			} else {
         		window.location.href = $(this).parents('.bottom_bar_item').data('articleurl');
 			}
-        	window.location.reload();
 		});
     });
 </script>
@@ -74,27 +73,31 @@
 
 	<div id="container">
 		<div id="content">
-			<div id="locations_left_area"></div>
-			<div id="locations_right_area"></div>
-			<div id="bottom_bar">
-				<div id="bottom_content">
-					<?php while ( have_posts() ) : the_post() ?>
-						<article class="bottom_bar_item" data-kml="<?php if (get_post_custom_values('kml')) { $myKml = get_post_custom_values('kml'); echo $myKml[0]; } ?>"
-								data-articleurl="<?php the_permalink(); ?>">
-							<div class="bottom_bar_item_inner" >
-								<div class="post-day"><?php the_time('d') ?></div>
-								<div class="post-month"><?php the_time('M') ?> – <?php the_time('Y') ?></div>
-								<div class="entry-meta">
-									<h2 class="entry-title"><?php the_title() ?></h2>
-									<div class="entry-date">
+			<div id="bottom_bar_left_area"></div>
+			<div id="bottom_bar_right_area"></div>
+			<div id="bottom_bar_outer1">
+				<div id="bottom_bar_outer2">
+					<div id="bottom_bar">
+						<div id="bottom_content">
+							<?php while ( have_posts() ) : the_post() ?>
+								<article class="bottom_bar_item" data-kml="<?php if (get_post_custom_values('kml')) { $myKml = get_post_custom_values('kml'); echo $myKml[0]; } ?>"
+										data-articleurl="<?php the_permalink(); ?>">
+									<div class="bottom_bar_item_inner" >
+										<div class="post-day"><?php the_time('d') ?></div>
+										<div class="post-month"><?php the_time('M') ?> – <?php the_time('Y') ?></div>
+										<div class="entry-meta">
+											<h2 class="entry-title"><?php the_title() ?></h2>
+											<div class="entry-date">
+											</div>
+											<div class="entry-foto"></div>
+											<div class="longdesc"><?php the_content( __('Continue Reading &rarr;','wandrak-02' ) ); ?>
+											<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'wandrak-02' ) . '&after=</div>') ?></div>
+										</div><!-- .entry-meta -->
 									</div>
-									<div class="entry-foto"></div>
-									<div class="longdesc"><?php the_content( __('Continue Reading &rarr;','wandrak-02' ) ); ?>
-									<?php wp_link_pages('before=<div class="page-link">' . __( 'Pages:', 'wandrak-02' ) . '&after=</div>') ?></div>
-								</div><!-- .entry-meta -->
-							</div>
-						</article>
-					<?php endwhile; ?>
+								</article>
+							<?php endwhile; ?>
+						</div>
+					</div>
 				</div>
 			</div>
 

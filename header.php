@@ -48,6 +48,7 @@
 	var myOptions = {
 	    zoom: 8,
 	    center: europe,
+	    disableDefaultUI: true,
 	    mapTypeId: google.maps.MapTypeId.ROADMAP
 	  };
 

@@ -141,24 +141,6 @@ h1#blog-description{
 }
 
 /*==== List of Posts =====*/
-#locations_left_area {
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	height: 120px;
-	width: 20px;
-	cursor: pointer;
-	z-index: 200;
-}
-#locations_right_area {
-	position: fixed;
-	bottom: 0px;
-	right: 0px;
-	height: 120px;
-	width: 20px;
-	cursor: pointer;
-	z-index: 200;
-}
 #more-info {
 	float: left;
 	position: fixed;
@@ -358,16 +340,28 @@ p.a {
 	background-color: #393730; 
 	opacity:0.85;
 	filter:alpha(opacity=85); /* For IE8 and earlier */	
-}		
-#bottom_bar {
-	margin:0;padding:0;
-	background: url("images/item-background.png") repeat scroll 0 0 transparent;
+}
+#bottom_bar_outer1 {
+	margin: 0;
+	padding:0;
 	bottom: 0;
 	position: fixed;
-	width: 100%;
 	z-index: 100;
 	height: 120px;
+	width: 100%;
+}
+#bottom_bar_outer2 {
+	margin-left: 61px;
+	margin-right: 63px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 	overflow: hidden;
+}
+#bottom_bar {
+	padding:0;
+	margin: 0;
+	background: repeat scroll 0 0 transparent;
+	width: 100%;
 }
 #bottom_content {
 	width: 7950px;
@@ -378,18 +372,20 @@ p.a {
 	bottom: 0px;
 	left: 0px;
 	height: 120px;
-	width: 20px;
+	width: 61px;
 	cursor: pointer;
 	z-index: 200;
+	background: url('../images/older-posts.jpg');
 }
 #bottom_bar_right_area {
 	position: fixed;
 	bottom: 0px;
 	right: 0px;
 	height: 120px;
-	width: 20px;
+	width: 61px;
 	cursor: pointer;
 	z-index: 200;
+	background: url('../images/newer-posts.jpg');
 }
 .bottom_bar_item {
 	float: left;
