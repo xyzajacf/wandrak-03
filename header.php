@@ -57,6 +57,22 @@
 	if (typeof onReadyLocal == 'function') {
 		onReadyLocal();
 	}
+
+	$("#mapTypeRoadmap").click(function () {
+		map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+	});
+	$("#mapTypeSatelite").click(function () {
+		map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+	});
+	$("#mapTypeTerrain").click(function () {
+		map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
+	});
+	$("#mapZoomIn").click(function () {
+		map.setZoom(map.getZoom() + 1);
+	});
+	$("#mapZoomOut").click(function () {
+		map.setZoom(map.getZoom() - 1);
+	});
   });
 </script>
 
@@ -67,7 +83,16 @@
 <div id="background">
 	  <div id="map_canvas" style="width:100%; height:100%;"></div>
 </div>
-<body <?php body_class(); ?>>	
+<body <?php body_class(); ?>>
+	<div id="map_tools">
+		<div id="mapZoomIn"></div>
+		<div id="mapZoomOut"></div>
+		<div id="mapToolsType">
+			<div id="mapTypeRoadmap"><div>Roadmap</div></div>
+			<div id="mapTypeSatelite"><div>Satelite</div></div>
+			<div id="mapTypeTerrain"><div>Terrain</div></div>
+		</div>
+	</div>
 <div id="wrapper" class="hfeed">
 		<div id="header">
 		<div id="masthead">

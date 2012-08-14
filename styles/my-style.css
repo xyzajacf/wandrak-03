@@ -428,3 +428,47 @@ p.a {
 {
 	display: none;
 }
+
+#map_tools {
+	width: 0px;
+	height: 0px;
+	overflow: visible;
+	font-family: 'Open Sans', sans-serif;
+}
+#mapZoomIn {
+	background: url('../images/zoom-in.jpg');
+	width: 60px;
+	height: 60px;
+	position: fixed;
+	top: 100px;
+	left: 30px;
+}
+#mapZoomOut {
+	background: url('../images/zoom-out.jpg');
+	width: 60px;
+	height: 60px;
+	position: fixed;
+	top: 160px;
+	left: 30px;
+}
+#mapToolsType {
+	position: fixed;
+	top: 150px;
+	right: 30px;
+	height: 44px;
+}
+#mapTypeRoadmap, #mapTypeSatelite, #mapTypeTerrain {
+	color: #f7611b;
+	background: #393730;
+	padding-left: 10px;
+	padding-right: 10px;
+	height: 44px;
+	float: left;
+}
+#mapTypeRoadmap div, #mapTypeSatelite div, #mapTypeTerrain div {
+	padding-top: 10px;
+}
+#mapTypeRoadmap:hover, #mapTypeSatelite:hover, #mapTypeTerrain:hover {
+	color: #393730;
+	background: #f7611b;
+}
