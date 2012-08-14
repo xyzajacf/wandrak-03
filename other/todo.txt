@@ -1,0 +1,3 @@
+
+- fotka ako background v zozname, index.php
+- ak to nie je aktivne, je to trochu zosedene

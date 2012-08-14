@@ -109,29 +109,6 @@ h1#blog-description{
 .entry-utility {}
 .vcard {}
 	
-.post-day{
-	font-family: 'Open Sans',sans-serif;
-	font-size: 55px; line-height: 55px;
-	font-weight: 800;
-	text-align: center;
-	padding: 22px 0 9px;
-	color: #F8611C;
-	background-color: #393730;
-	opacity:0.85;
-	filter:alpha(opacity=85); /* For IE8 and earlier */
-}
-
-.post-month {
-	font-size: 14px;
-	line-height: 22px;
-	font-style: italic;
-	text-align: center;
-	padding: 6px 0 6px;
-	color: #F8611C;
-	background-color: #393730;
-}
-
-	
 /* WIDGETS LAYOUT */
 .widget-area {
 	
@@ -415,10 +392,35 @@ p.a {
 	z-index: 200;
 }
 .bottom_bar_item {
-	height: 120px;
-	width: 180px;
-	background: gray transparent;
 	float: left;
+	margin-left: 1px;
+	margin-right: 1px;
+	cursor: pointer;
+}
+.bottom_bar_item_inner {
+	height: 118px;
+	width: 178px;
+	background: gray;
+}
+.post-day{
+	font-family: 'Open Sans',sans-serif;
+	font-size: 55px; line-height: 55px;
+	font-weight: 800;
+	text-align: center;
+	padding: 22px 0 9px;
+	color: #F8611C;
+	background-color: #393730;
+	opacity:0.85;
+	filter:alpha(opacity=85); /* For IE8 and earlier */
+}
+.post-month {
+	font-size: 14px;
+	line-height: 22px;
+	font-style: italic;
+	text-align: center;
+	padding: 6px 0 6px;
+	color: #F8611C;
+	background-color: #393730;
 }
 .bottom_bar_item:hover, .bottom_bar_item.hover { 
 	background-color: #E7DED1; 
