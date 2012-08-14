@@ -429,6 +429,30 @@ p.a {
 	display: none;
 }
 
+<<<<<<< HEAD
+=======
+
+/* EDITOR UI */
+
+#editorTools {
+	left: 250px;
+	top: 100px;
+	position: fixed;
+	padding:11px 0px 11px 0px;
+	display:none;
+}
+
+input.add_poi_button {
+	top:100px;
+	color: #F8611C;
+	background: none repeat scroll 0 0 #393730;
+	border: none;
+}
+
+
+/* MAP GUI */
+
+>>>>>>> Styles
 #map_tools {
 	width: 0px;
 	height: 0px;
@@ -471,6 +495,7 @@ p.a {
 #mapTypeRoadmap:hover, #mapTypeSatelite:hover, #mapTypeTerrain:hover {
 	color: #393730;
 	background: #f7611b;
+<<<<<<< HEAD
 }
 
 #editorTools {
@@ -487,3 +512,6 @@ input.add_poi_button {
 	background: none repeat scroll 0 0 #393730;
 	border: none;
 }
+=======
+}
+>>>>>>> Styles
