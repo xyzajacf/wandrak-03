@@ -429,7 +429,6 @@ p.a {
 	display: none;
 }
 
-<<<<<<< HEAD
 #map_tools {
 	width: 0px;
 	height: 0px;
@@ -473,8 +472,6 @@ p.a {
 	color: #393730;
 	background: #f7611b;
 }
-=======
-/* EDITOR UI */
 
 #editorTools {
 	left: 250px;
@@ -490,4 +487,3 @@ input.add_poi_button {
 	background: none repeat scroll 0 0 #393730;
 	border: none;
 }
->>>>>>> some styles

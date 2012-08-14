@@ -10,6 +10,15 @@
 	var WRITE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&status=publish&type=page&na=1';
 	var DELETE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&delete=1';
 
+	var tentIcon = new google.maps.MarkerImage('<?php echo get_template_directory_uri(); ?>/images/markers/tent.png',
+						      // This marker is 20 pixels wide by 32 pixels tall.
+						      new google.maps.Size(80, 83),
+						      // The origin for this image is 0,0.
+						      new google.maps.Point(0,0),
+						      // The anchor for this image is the base of the flagpole at 0,32.
+						      new google.maps.Point(0, 40));
+
+
 	var onReadyLocal = function() {
 		 marker_bubble_template = _.template($("#marker_bubble_template").html());
 
@@ -43,6 +52,7 @@
 			position: location,
 			map: map,
 			draggable: true,
+			icon: tentIcon,
 			clickable: true
 		});
 		marker.markerId = markerObj.markerId;
