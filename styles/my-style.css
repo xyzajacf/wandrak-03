@@ -144,9 +144,9 @@ h1#blog-description{
 #more-info {
 	float: left;
 	position: fixed;
-	top: 242px;
-	left: 0;
-	width: 576px;
+	top: 159px;
+	right: 0;
+	width: 482px;
 	max-height: 45%;
 	padding: 44px 0 22px;
 	overflow: hidden;
