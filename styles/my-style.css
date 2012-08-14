@@ -39,14 +39,6 @@
 	display:inline;
 }
 
-#editorTools {
-	left: 250px;
-	top: 20px;
-	position:absolute;
-	padding:11px 0px 11px 0px;
-	display:none;
-}
-
 #blog-title{
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 800; 
@@ -79,15 +71,25 @@ h1#blog-description{
 #container {}
 #content {}
 .post,.type-page {
-	padding-bottom: 17.5px;
-	padding-left: 33px;
-	padding-right: 30px;
-	padding-top: 33px;
+	float: left;
+	position: fixed;
+	top: 159px;
+	right: 0;
+	width: 482px;
+	max-height: 45%;
+	padding: 44px 0 22px;
+	overflow: hidden;
+	background: none repeat scroll 0 0 #E7DED1;
+	z-index: 900;
+	opacity:0.85;
+	filter:alpha(opacity=85); /* For IE8 and earlier */
 }
 
 .entry-title {
-	margin-bottom: 20px;
-	font-size: 16px;
+}
+
+.entry-content {
+	padding: 0 48px;
 }
 
 .entry-meta {
@@ -140,7 +142,7 @@ h1#blog-description{
 	visibility: hidden;
 }
 
-/*==== List of Posts =====*/
+/*==== LIST OF POSTS =====*/
 #more-info {
 	float: left;
 	position: fixed;
@@ -243,7 +245,6 @@ h1 {
 	font-family: 'Open Sans',sans-serif;
 	font-size: 40px;
 	font-weight: 800;
-	letter-spacing: -1.3px;
 	line-height: 40px;
 	margin-left: 0;
 	margin-right: 0;
@@ -256,10 +257,9 @@ h2 {
 	font-weight: 800;
 	line-height: 23px;
 	margin-top: -6px;
-	word-spacing: -2px;
 }
 
-h2.preview {
+h1.entry-title, h2.preview {
 	font-size: 32px;
 	font-weight: 800;
 	line-height: 33px;
@@ -308,7 +308,7 @@ p.a {
 	color: #000;
 }
 
-.excerpt{
+.excerpt {
 	padding: 0 48px;
 	font-style: italic !important;
 }
@@ -429,6 +429,7 @@ p.a {
 	display: none;
 }
 
+<<<<<<< HEAD
 #map_tools {
 	width: 0px;
 	height: 0px;
@@ -472,3 +473,21 @@ p.a {
 	color: #393730;
 	background: #f7611b;
 }
+=======
+/* EDITOR UI */
+
+#editorTools {
+	left: 250px;
+	top: 20px;
+	position:absolute;
+	padding:11px 0px 11px 0px;
+	display:none;
+}
+
+input.add_poi_button {
+	top:100px;
+	color: #F8611C;
+	background: none repeat scroll 0 0 #393730;
+	border: none;
+}
+>>>>>>> some styles
