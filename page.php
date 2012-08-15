@@ -8,9 +8,9 @@
 	var marker_bubble_template;
 	var poi_type_tool_item_template;
 
-	var GET_PAGE_URL = '<?php $BASE_URL ?>/?json=get_page';
-	var WRITE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&status=publish&type=page&na=1';
-	var DELETE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&delete=1';
+	var GET_PAGE_URL = '<?php echo site_url() ?>/?json=get_page';
+	var WRITE_PAGE_URL = '<?php echo site_url() ?>/?json=create_post&status=publish&type=page&na=1';
+	var DELETE_PAGE_URL = '<?php echo site_url() ?>/?json=create_post&delete=1';
 
 	var poiTypes = ['cocker', 'cyclo', 'eating', 'tent'];
 	var poiIcons = {};

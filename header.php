@@ -112,7 +112,7 @@
 			</div><!-- #access -->
 
 			<div id="editorTools">
-				<input type="button" value="Add poi" class="add_poi_button"/>
+				<input type="button" value="Add Point" class="add_poi_button"/>
 				<div id="editorToolsPoiTypes">
 				</div>
 			</div>
