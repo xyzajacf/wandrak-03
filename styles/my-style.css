@@ -436,7 +436,7 @@ p.a {
 }
 
 
-/* EDITOR UI */
+/* EDITOR GUI */
 
 #editorTools {
 	left: 220px;
@@ -498,3 +498,10 @@ input.add_poi_button {
 #mapTypeRoadmap:hover, #mapTypeSatelite:hover, #mapTypeTerrain:hover {
 	color: #393730;
 	background: #f7611b;
+	
+}
+/* MAP */
+
+.poi_info_window {
+	background: #E7DED1;
+}
