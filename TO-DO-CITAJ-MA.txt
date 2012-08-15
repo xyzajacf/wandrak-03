@@ -1,6 +1,9 @@
 /* CO TREBA SPRAVIT  */
 
 - Pri uploadovani do custom fields pridat moznost nastavit defaul map – ROAD/SATELIE/TERAIN
-- Add poi nefunguje???
+- Add poi nefunguje??? Aj po prihlaseni
 - Add poi – Premenovat na nieco ludskejsie
+- Add poi – By nemalo byt dostupne pre neprihlaseneho
 - Nastylovat infobox a infowindov
+
+- 

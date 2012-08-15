@@ -417,6 +417,13 @@ p.a {
 	color: #F8611C;
 	background-color: #393730;
 }
+
+.post-day:hover, .post-month:hover,
+.post-day:active, .post-month:active {
+	opacity:0.0;
+	filter:alpha(opacity=0); /* For IE8 and earlier */
+}
+
 .bottom_bar_item:hover, .bottom_bar_item.hover { 
 	background-color: #E7DED1; 
 }
