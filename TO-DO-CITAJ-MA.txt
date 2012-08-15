@@ -2,13 +2,12 @@
 
 - Pri uploadovani do custom fields pridat moznost nastavit defaul map – ROAD/SATELIE/TERAIN
 - Add poi nefunguje??? Aj po prihlaseni
-- Add poi – Premenovat na nieco ludskejsie – Add Point
-- Add poi – By nemalo byt dostupne pre neprihlaseneho
+- Add poi � By nemalo byt dostupne pre neprihlaseneho
 - Nastylovat infobox a infowindov
 
 - 
 
-- Add Point –
+- Add Point
 - 1. Klik > Vybrat marker Marker
 - 2. Marker umiestnit
 - 3. Automaticke zobrazenie infowindov
