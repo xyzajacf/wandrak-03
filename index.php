@@ -80,11 +80,20 @@
 					<div id="bottom_bar">
 						<div id="bottom_content">
 							<?php while ( have_posts() ) : the_post() ?>
+								<?php $myThumbUrl = "" ?>
+								<?php if ( has_post_thumbnail()) : ?>
+									 <?php 
+									 	$thumbImgArr = wp_get_attachment_image_src ( get_post_thumbnail_id ( ), 'single-post-thumbnail' );
+										$myThumbUrl = " background: url('" . $thumbImgArr[0] . "')";
+									 ?>
+								<?php endif; ?>
 								<article class="bottom_bar_item" data-kml="<?php if (get_post_custom_values('kml')) { $myKml = get_post_custom_values('kml'); echo $myKml[0]; } ?>"
-										data-articleurl="<?php the_permalink(); ?>">
-									<div class="bottom_bar_item_inner" >
+										data-articleurl="<?php the_permalink(); ?>" >
+									<div class="bottom_bar_item_inner" style="<?php echo $myThumbUrl ?>">
 										<div class="post-day"><?php the_time('d') ?></div>
-										<div class="post-month"><?php the_time('M') ?> – <?php the_time('Y') ?></div>
+										<div class="post-month">
+											<?php the_time('M') ?> – <?php the_time('Y') ?>
+										</div>
 										<div class="entry-meta">
 											<h2 class="entry-title"><?php the_title() ?></h2>
 											<div class="entry-date">

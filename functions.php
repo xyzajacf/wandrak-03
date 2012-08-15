@@ -10,6 +10,8 @@ $locale_file = TEMPLATEPATH . "/languages/$locale.php";
 if ( is_readable($locale_file) )
 	require_once($locale_file);
 
+add_theme_support('post-thumbnails');
+set_post_thumbnail_size(180, 120);
 
 // Get the page number
 function get_page_number() {
