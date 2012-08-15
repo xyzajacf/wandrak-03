@@ -6,31 +6,57 @@
 	var maxMarkerId = 1;
 
 	var marker_bubble_template;
+	var poi_type_tool_item_template;
+
 	var GET_PAGE_URL = '<?php $BASE_URL ?>/?json=get_page';
 	var WRITE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&status=publish&type=page&na=1';
 	var DELETE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&delete=1';
 
-	var tentIcon = new google.maps.MarkerImage('<?php echo get_template_directory_uri(); ?>/images/markers/tent.png',
-						      // This marker is 20 pixels wide by 32 pixels tall.
-						      new google.maps.Size(80, 83),
-						      // The origin for this image is 0,0.
-						      new google.maps.Point(0,0),
-						      // The anchor for this image is the base of the flagpole at 0,32.
-						      new google.maps.Point(0, 40));
-
+	var poiTypes = ['cocker', 'cyclo', 'eating', 'tent'];
+	var poiIcons = {};
+	$.each(poiTypes, function (key, poiType) {
+		var icon = new google.maps.MarkerImage(
+				'<?php echo get_template_directory_uri(); ?>/images/markers/' + poiType + '.png',
+				// This marker is 20 pixels wide by 32 pixels tall.
+				new google.maps.Size(80, 83),
+				// The origin for this image is 0,0.
+				new google.maps.Point(0,0),
+				// The anchor for this image is the base of the flagpole at 0,32.
+				new google.maps.Point(0, 40));
+		poiIcons[poiType] = icon;
+	});
 
 	var onReadyLocal = function() {
 		 marker_bubble_template = _.template($("#marker_bubble_template").html());
+		 poi_type_tool_item_template = _.template($("#poi_type_tool_item_template").html());
 
 		$("#editorTools").css('display', 'inline');
-		$(".add_poi_button").click(function () {
-			addingMapPoint = true;
+		$("#editorToolsPoiTypes").hide();
+		$.each(poiIcons, function (poiType, poiIcon) {
+			var info = { type: poiType, icon: poiIcon };
+			$("#editorToolsPoiTypes").append(poi_type_tool_item_template(info));
+		});
+		$(".poi_tool_item").click(function () {
+			addingPoiType = $(this).data('type');
+		});
+		$("#editorTools").mouseover(function (ev) {
+			ev.stopPropagation();
+			return false;
+		});
+		$(".add_poi_button").mouseover(function (ev) {
+			$("#editorToolsPoiTypes").show();
+			ev.stopPropagation();
+			return false;
+		});
+		$("body").mouseover(function () {
+			$("#editorToolsPoiTypes").hide();
 		});
 
 		google.maps.event.addListener(map, 'click', function(event) {
-			if (addingMapPoint) {
-			    placeMarker(null, '', '', event.latLng);
-			    addingMapPoint = false;
+			if (addingPoiType) {
+			    var marker = placeMarker(null, '', '', event.latLng, addingPoiType);
+			    google.maps.event.trigger(marker, 'click');
+			    addingPoiType = null;
 			}
 		});
 		initMarkers($("#content").data('postid'));
@@ -43,8 +69,8 @@
 		}
 	};
 
-	function placeMarker(postId, title, description, location) {
-		var markerObj = { postId: postId, markerId: maxMarkerId, title: title, descr: description, location: location };
+	function placeMarker(postId, title, description, location, poiType) {
+		var markerObj = { postId: postId, markerId: maxMarkerId, title: title, descr: description, location: location, poiType: poiType };
 		markerModel[markerObj.markerId] = markerObj;
 		maxMarkerId++;
 
@@ -52,12 +78,12 @@
 			position: location,
 			map: map,
 			draggable: true,
-			icon: tentIcon,
+			icon: poiIcons[poiType],
 			clickable: true
 		});
 		marker.markerId = markerObj.markerId;
 
-		google.maps.event.addListener(marker, "click", function() {
+		var markerClickListener = function() {
 			if (mapPointInfoWindow) {
 				mapPointInfoWindow.close();
 			}
@@ -71,6 +97,8 @@
 				markerEl.find('.mbubble_ok').click(function () {
 					markerObj.title = markerEl.find('.mbubble_title').val();
 					markerObj.descr = markerEl.find('.mbubble_descr').val();
+					markerObj.poiType = markerEl.find('.poi_type_select.active').data('type');
+					marker.setIcon(poiIcons[markerObj.poiType]);
 					updateSaveMarkerAsync(markerObj);
 					mapPointInfoWindow.close();
 				});
@@ -83,13 +111,20 @@
 					removeMarkerAsync(markerObj);
 					mapPointInfoWindow.close();
 				});
+				markerEl.find('.poi_type_select').click(function () {
+					markerEl.find('.poi_type_select').removeClass('active');
+					$(this).addClass('active');
+				});
 			});
-		});
+		};
+		google.maps.event.addListener(marker, "click", markerClickListener);
 
 		google.maps.event.addListener(marker, 'dragend', function() {
 			markerObj.location = marker.getPosition();
 			updateSaveMarkerAsync(markerObj);
 		});
+		
+		return marker;
 	}
 
 	function initMarkers(parentPageId) {
@@ -109,10 +144,11 @@
 			var page = data.page;
 			$.each(page.children, function (key, childData) {
 				var location = defaultLocation;
+				var poiType = childData.custom_fields['poiType'];
 				if (childData.custom_fields && childData.custom_fields['lat'] && childData.custom_fields['lng']) {
 					location = new google.maps.LatLng(childData.custom_fields['lat'], childData.custom_fields['lng']);
 				}
-				placeMarker(childData.id, childData.title, childData.contentStripped, location);
+				placeMarker(childData.id, childData.title, childData.contentStripped, location, poiType);
 			});
 			return;
 		}
@@ -124,7 +160,7 @@
 	}
 
 	var mapPointInfoWindow = null;
-	var addingMapPoint = false;
+	var addingPoiType = null;
 
 	function updateSaveMarkerAsync(markerObj) {
 		var parentPostId = $("#content").data('postid');
@@ -135,6 +171,7 @@
 						+ '&markerId=' + markerObj.markerId
 						+ '&lat=' + markerObj.location.lat()
 						+ '&lng=' + markerObj.location.lng()
+						+ '&poiType=' + markerObj.poiType
 						+ '&parent_id=' + parentPostId;
 
 		$.ajax({
@@ -190,9 +227,19 @@
 	<div id="bmarkerInfoWindow<%= markerId %>" class="poi_info_window">
 		title: <input type="text" class="mbubble_title" value="<%= title %>"></input><br/>
 		text: <textarea class="mbubble_descr"><%= descr %></textarea><br/>
+		<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
+			<div class="poi_type_select <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': '' %>"
+				data-type="<%= iterPoiType %>"></div>
+		<% }); %>
 		<input type="button" value="OK" class="mbubble_ok"></input>
 		<input type="button" value="Cancel" class="mbubble_cancel"></input>
 		<input type="button" value="Remove" class="mbubble_remove"></input>
+	</div>
+</script>
+
+<script type="text/html" id="poi_type_tool_item_template">
+	<div id="poiToolItem<%= type %>" data-type="<%= type %>" class="poi_tool_item"
+		style=" background: url('<%= icon.url %>'); width: <%= icon.size.width %>px; height: <%= icon.size.height %>px;">
 	</div>
 </script>
 

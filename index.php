@@ -46,6 +46,8 @@
 	             wnd_ctaLayer = new google.maps.KmlLayer($el.data('kml'));
 	             wnd_ctaLayer.setMap(map);
 	          }
+	          $('.bottom_bar_item_inner').removeClass('selected');
+	          $el.find('.bottom_bar_item_inner').addClass('selected');
 	
 		    $("#more-info")
 		      .find("h2")

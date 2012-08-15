@@ -58,6 +58,9 @@ class JSON_API_Posts_Controller {
     if (update_post_meta($id, 'lng', $_REQUEST['lng'])) {
 	    add_post_meta($id, 'lng', $_REQUEST['lng'], true);
 	}
+    if (update_post_meta($id, 'poiType', $_REQUEST['poiType'])) {
+	    add_post_meta($id, 'poiType', $_REQUEST['poiType'], true);
+	}
     return array(
       'post' => $post,
       'markerId' => $_REQUEST['markerId']

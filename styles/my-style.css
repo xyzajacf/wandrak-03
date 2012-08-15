@@ -397,7 +397,7 @@ p.a {
 	width: 178px;
 	background: gray;
 }
-.post-day{
+.post-day {
 	font-family: 'Open Sans',sans-serif;
 	font-size: 55px; line-height: 55px;
 	font-weight: 800;
@@ -418,10 +418,10 @@ p.a {
 	background-color: #393730;
 }
 
-.post-day:hover, .post-month:hover,
-.post-day:active, .post-month:active {
-	opacity:0.0;
-	filter:alpha(opacity=0); /* For IE8 and earlier */
+.bottom_bar_item_inner.selected .post-day, .bottom_bar_item_inner.selected .post-month,
+.bottom_bar_item_inner:hover .post-day, .bottom_bar_item_inner:hover .post-month
+{
+	background-color: transparent;
 }
 
 .bottom_bar_item:hover, .bottom_bar_item.hover { 
@@ -452,6 +452,44 @@ input.add_poi_button {
 	padding: 9px 22px;
 }
 
+.poi_tool_item {
+	cursor: pointer;
+}
+
+.poi_type_select {
+	width: 80px;
+	height: 83px;
+	opacity:0.50;
+	filter:alpha(opacity=50); /* For IE8 and earlier */
+	float: left;
+}
+
+.poi_type_select:hover {
+	opacity:0.80;
+	filter:alpha(opacity=80); /* For IE8 and earlier */
+	cursor: pointer;
+}
+
+.poi_type_select.active, .poi_type_select.active:hover {
+	opacity:1.00;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+
+.poi_type_select.cocker {
+	background: url('../images/markers/cocker.png');
+}
+
+.poi_type_select.cyclo {
+	background: url('../images/markers/cyclo.png');
+}
+
+.poi_type_select.eating {
+	background: url('../images/markers/eating.png');
+}
+
+.poi_type_select.tent {
+	background: url('../images/markers/tent.png');
+}
 
 /* MAP GUI */
 #map_tools {
@@ -498,3 +536,4 @@ input.add_poi_button {
 #mapTypeRoadmap:hover, #mapTypeSatelite:hover, #mapTypeTerrain:hover {
 	color: #393730;
 	background: #f7611b;
+}

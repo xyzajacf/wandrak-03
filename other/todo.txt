@@ -1,3 +1,7 @@
 
-- fotka ako background v zozname, index.php
-- ak to nie je aktivne, je to trochu zosedene
+x- fotka ako background v zozname, index.php
+x- ak to nie je aktivne, je to trochu zosedene
+
+- info box ma byt spravne stylovany - mail
+- bug so savovanim pois
+- po vybere poi z poi menu by mala sa mys zmenit na posuvany poi

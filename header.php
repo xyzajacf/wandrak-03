@@ -113,6 +113,8 @@
 
 			<div id="editorTools">
 				<input type="button" value="Add poi" class="add_poi_button"/>
+				<div id="editorToolsPoiTypes">
+				</div>
 			</div>
 			
 		</div><!-- #masthead -->	
