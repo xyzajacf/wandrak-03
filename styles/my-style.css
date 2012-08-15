@@ -53,7 +53,7 @@
 	border-right: 1px solid #E7DED1;
 } 
 
-h1#blog-description{
+#blog-description{
 	font-family: 'Georgia',serif;
 	font-size: 20px;
 	line-height: 33px;
@@ -249,7 +249,6 @@ h1 {
 	margin-left: 0;
 	margin-right: 0;
 	margin-top: -2px;
-	word-spacing: -2px;
 }
 h2 {
 	font-family: 'Open Sans',sans-serif;
@@ -429,61 +428,66 @@ p.a {
 	display: none;
 }
 
+
+/* EDITOR UI */
+
+#editorTools {
+	left: 220px;
+	top: 61px;
+	position: fixed;
+	display:none;
+}
+
+input.add_poi_button {
+	color: #F8611C;
+	background: none repeat scroll 0 0 #393730;
+	border: none;
+	padding: 9px 22px;
+}
+
+
+/* MAP GUI */
 #map_tools {
 	width: 0px;
 	height: 0px;
 	overflow: visible;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Geneva', 'Helvetica' , sans-serif;
+	font-size: 12px;
+	text-transform: uppercase;
 }
 #mapZoomIn {
 	background: url('../images/zoom-in.jpg');
 	width: 60px;
 	height: 60px;
 	position: fixed;
-	top: 100px;
-	left: 30px;
+	top: 72px;
+	left: 0;
 }
 #mapZoomOut {
 	background: url('../images/zoom-out.jpg');
 	width: 60px;
 	height: 60px;
 	position: fixed;
-	top: 160px;
-	left: 30px;
+	top: 133px;
+	left: 0;
 }
 #mapToolsType {
 	position: fixed;
-	top: 150px;
-	right: 30px;
+	top: 71px;
+	right: 0;
 	height: 44px;
 }
 #mapTypeRoadmap, #mapTypeSatelite, #mapTypeTerrain {
 	color: #f7611b;
 	background: #393730;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 0 17px;
+	margin: 0 0 0 2px;
 	height: 44px;
 	float: left;
 }
 #mapTypeRoadmap div, #mapTypeSatelite div, #mapTypeTerrain div {
-	padding-top: 10px;
+	padding-top: 12px;
 }
 #mapTypeRoadmap:hover, #mapTypeSatelite:hover, #mapTypeTerrain:hover {
 	color: #393730;
 	background: #f7611b;
-}
-
-#editorTools {
-	left: 250px;
-	top: 20px;
-	position:absolute;
-	padding:11px 0px 11px 0px;
-	display:none;
-}
-
-input.add_poi_button {
-	top:100px;
-	color: #F8611C;
-	background: none repeat scroll 0 0 #393730;
-	border: none;
-}
