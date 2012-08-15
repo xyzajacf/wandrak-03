@@ -6,9 +6,9 @@
 	var maxMarkerId = 1;
 
 	var marker_bubble_template;
-	var GET_PAGE_URL = '<?php $BASE_URL ?>/?json=get_page';
-	var WRITE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&status=publish&type=page&na=1';
-	var DELETE_PAGE_URL = '<?php $BASE_URL ?>/?json=create_post&delete=1';
+	var GET_PAGE_URL = '<?php echo site_url() ?>/?json=get_page';
+	var WRITE_PAGE_URL = '<?php echo site_url() ?>/?json=create_post&status=publish&type=page&na=1';
+	var DELETE_PAGE_URL = '<?php echo site_url() ?>/?json=create_post&delete=1';
 
 	var tentIcon = new google.maps.MarkerImage('<?php echo get_template_directory_uri(); ?>/images/markers/tent.png',
 						      // This marker is 20 pixels wide by 32 pixels tall.
