@@ -4,6 +4,7 @@ x- ak to nie je aktivne, je to trochu zosedene
 
 x- po vybere poi z poi menu by mala sa mys zmenit na posuvany poi
 x- neprihlaseny user nevie editovat detail cesty
-- info box ma byt spravne stylovany - mail
+x- info box ma byt spravne stylovany - mail
 - bug so savovanim pois
+  (toto vyzera byt ok, sledovat dalej.. mozno su problemom stare data..)
 

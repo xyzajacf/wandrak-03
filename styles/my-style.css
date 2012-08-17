@@ -528,13 +528,23 @@ input.add_poi_button {
 	float: left;
 }
 
-.poi_type_select, .poi_type_view {
+.poi_infobox_type_bar {
 	width: 66px;
 	height: 66px;
-	opacity:0.50;
-	filter:alpha(opacity=50); /* For IE8 and earlier */
-	display: none;
 	float: left;
+	overflow: visible;
+	position: relative;
+}
+
+.poi_type_select, .poi_type_view {
+	width: 66px;
+	height: 55px;
+	opacity: 0.50;
+	filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.poi_type_select.notdisplayed, .poi_type_view.notdisplayed {
+	display: none;
 }
 
 .poi_type_select:hover {
@@ -545,8 +555,14 @@ input.add_poi_button {
 
 .poi_type_select.active, .poi_type_select.active:hover, .poi_type_view.active {
 	opacity:1.00;
+	height: 66px;
 	filter:alpha(opacity=100); /* For IE8 and earlier */
-	display: inherit;
+}
+
+.poi_type_select.active.selecting, .poi_type_select.active.selecting:hover {
+	opacity: 1.00;
+	height: 55px;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
 }
 
 .poi_type_select.cook, .poi_type_view.cook {

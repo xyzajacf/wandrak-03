@@ -54,6 +54,7 @@
 		});
 		$("body").mouseover(function () {
 			$("#editorToolsPoiTypes").hide();
+			$(".poi_type_select.active.selecting").click();
 		});
 
 		google.maps.event.addListener(map, 'click', function(event) {
@@ -91,6 +92,7 @@
 			clickable: true
 		});
 		marker.markerId = markerObj.markerId;
+		markerObj.mapMarker = marker;
 
 		var markerClickListener = function() {
 			if (mapPointInfoWindow) {
@@ -101,7 +103,7 @@
 				 content: marker_bubble_template(markerObj)
 				,disableAutoPan: false
 				,maxWidth: 0
-				,pixelOffset: new google.maps.Size(-217, -178)
+				,pixelOffset: new google.maps.Size(-217, -307)
 				,zIndex: null
 				,closeBoxMargin: "0px"
 				,closeBoxURL: ""
@@ -116,7 +118,7 @@
 			google.maps.event.addListener(mapPointInfoWindow, "domready", function() {
 				var markerEl = $("#bmarkerInfoWindow" + marker.markerId);
 				markerEl.find('.mbubble_title').focus();
-				markerEl.find('.mbubble_ok').click(function () {
+				var okClickCallback = function () {
 					markerObj.title = markerEl.find('.mbubble_title').val();
 					markerObj.descr = markerEl.find('.mbubble_descr').val();
 					markerObj.poiType = markerEl.find('.poi_type_select.active').data('type');
@@ -124,7 +126,8 @@
 					marker.setIcon(poiIcons[markerObj.poiType]);
 					updateSaveMarkerAsync(markerObj);
 					mapPointInfoWindow.close();
-				});
+				};
+				markerEl.find('.mbubble_ok').click(okClickCallback);
 				markerEl.find('.mbubble_cancel').click(function () {
 					if (markerObj.firstOpen) {
 						delete markerModel[marker.markerId];
@@ -138,9 +141,74 @@
 					removeMarkerAsync(markerObj);
 					mapPointInfoWindow.close();
 				});
+				markerEl.find('.poi_infobox_prev').click(function () {
+					okClickCallback();
+
+					var nextMarker = null;
+					$.each(markerModel, function (markerItemMarkerId, markerItem) {
+						if (nextMarker == null) {
+							nextMarker = markerItem;
+						} else if (markerItemMarkerId > nextMarker.markerId) {
+							nextMarker = markerItem;
+						}
+					});
+					if (nextMarker != null) {
+						$.each(markerModel, function (markerItemMarkerId, markerItem) {
+							if (marker.markerId > markerItemMarkerId
+									&& nextMarker.markerId >= marker.markerId) {
+								nextMarker = markerItem;
+							} else if (marker.markerId > markerItemMarkerId
+									&& markerItemMarkerId > nextMarker.markerId) {
+								nextMarker = markerItem;
+							}
+						});
+					}
+					if (nextMarker) {
+						google.maps.event.trigger(nextMarker.mapMarker, 'click');
+					}
+				});
+				markerEl.find('.poi_infobox_next').click(function () {
+					okClickCallback();
+
+					var nextMarker = null;
+					$.each(markerModel, function (markerItemMarkerId, markerItem) {
+						if (nextMarker == null) {
+							nextMarker = markerItem;
+						} else if (markerItemMarkerId < nextMarker.markerId) {
+							nextMarker = markerItem;
+						}
+					});
+					if (nextMarker != null) {
+						$.each(markerModel, function (markerItemMarkerId, markerItem) {
+							if (marker.markerId < markerItemMarkerId
+									&& nextMarker.markerId <= marker.markerId) {
+								nextMarker = markerItem;
+							} else if (marker.markerId < markerItemMarkerId
+									&& markerItemMarkerId < nextMarker.markerId) {
+								nextMarker = markerItem;
+							}
+						});
+					}
+					if (nextMarker) {
+						google.maps.event.trigger(nextMarker.mapMarker, 'click');
+					}
+				});
 				markerEl.find('.poi_type_select').click(function () {
 					markerEl.find('.poi_type_select').removeClass('active');
 					$(this).addClass('active');
+					markerObj.poiType = markerEl.find('.poi_type_select.active').data('type');
+					$(this).parents('.poi_infobox_type_bar').css('top', '0px');
+					markerEl.find('.poi_type_select').removeClass('selecting');
+					markerEl.find('.poi_type_select').addClass('notdisplayed');
+					markerEl.find('.poi_type_select.active').removeClass('notdisplayed');
+				});
+				markerEl.find('.poi_infobox_type_bar').mouseover(function (ev) {
+					markerEl.find('.poi_type_select').removeClass('notdisplayed');
+					markerEl.find('.poi_type_select').addClass('selecting');
+					var topOffsetpx = 55 * poiTypes.indexOf(markerObj.poiType);
+					$(this).css('top', '-' + topOffsetpx + 'px');
+					ev.stopPropagation();
+					return false;
 				});
 				markerEl.find(".poi_info_input_container").click(function () {
 					if ($(this).find('input').size() > 0) {
@@ -178,9 +246,11 @@
 			var page = data.page;
 			$.each(page.children, function (key, childData) {
 				var location = defaultLocation;
-				var poiType = childData.custom_fields['poiType'];
-				if (poiType == '' || poiType == null) {
-					poiType = poiTypes[0];
+				var poiType = poiTypes[0];
+				if (childData.custom_fields 
+						&& childData.custom_fields['poiType']
+						&& childData.custom_fields['poiType'][0]) {
+					poiType = childData.custom_fields['poiType'][0];
 				}
 				if (childData.custom_fields && childData.custom_fields['lat'] && childData.custom_fields['lng']) {
 					location = new google.maps.LatLng(childData.custom_fields['lat'], childData.custom_fields['lng']);
@@ -278,10 +348,12 @@
 				<div class="poi_infobox_bottom_center">
 					<div class="poi_infobox_prev"></div>
 					<div class="poi_infobox_bottom_space"></div>
-					<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
-						<div class="poi_type_select <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': '' %>"
-							data-type="<%= iterPoiType %>"></div>
-					<% }); %>
+					<div class="poi_infobox_type_bar">
+						<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
+							<div class="poi_type_select <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': 'notdisplayed' %>"
+								data-type="<%= iterPoiType %>"></div>
+						<% }); %>
+					</div>
 					<div class="poi_infobox_bottom_space"></div>
 					<div class="poi_infobox_next"></div>
 				</div>
@@ -297,7 +369,7 @@
 					<div class="poi_infobox_prev"></div>
 					<div class="poi_infobox_bottom_space"></div>
 					<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
-						<div class="poi_type_view <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': '' %>"
+						<div class="poi_type_view <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': 'notdisplayed' %>"
 							></div>
 					<% }); %>
 					<div class="poi_infobox_bottom_space"></div>
@@ -310,7 +382,7 @@
 
 <script type="text/html" id="poi_type_tool_item_template">
 	<div id="poiToolItem<%= type %>" data-type="<%= type %>" class="poi_tool_item"
-		style=" background: url('<%= icon.url %>'); width: <%= icon.size.width %>px; height: <%= icon.size.height %>px;">
+		style=" background: url('<%= icon.url %>'); width: <%= icon.size.width %>px; height: 55px;">
 	</div>
 </script>
 
