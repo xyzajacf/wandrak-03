@@ -12,17 +12,17 @@
 	var WRITE_PAGE_URL = '<?php echo site_url() ?>/?json=create_post&status=publish&type=page&na=1';
 	var DELETE_PAGE_URL = '<?php echo site_url() ?>/?json=create_post&delete=1';
 
-	var poiTypes = ['cocker', 'cyclo', 'eating', 'tent'];
+	var poiTypes = ['cook', 'cyclo', 'fork-knife', 'tent'];
 	var poiIcons = {};
 	$.each(poiTypes, function (key, poiType) {
 		var icon = new google.maps.MarkerImage(
 				'<?php echo get_template_directory_uri(); ?>/images/markers/' + poiType + '.png',
 				// This marker is 20 pixels wide by 32 pixels tall.
-				new google.maps.Size(80, 83),
+				new google.maps.Size(66, 66),
 				// The origin for this image is 0,0.
 				new google.maps.Point(0,0),
 				// The anchor for this image is the base of the flagpole at 0,32.
-				new google.maps.Point(0, 40));
+				new google.maps.Point(0, 33));
 		poiIcons[poiType] = icon;
 	});
 
@@ -30,14 +30,18 @@
 		 marker_bubble_template = _.template($("#marker_bubble_template").html());
 		 poi_type_tool_item_template = _.template($("#poi_type_tool_item_template").html());
 
-		$("#editorTools").css('display', 'inline');
-		$("#editorToolsPoiTypes").hide();
+		<?php if (is_user_logged_in()) { ?>
+			$("#editorTools").css('display', 'inline');
+			$("#editorToolsPoiTypes").hide();
+		<?php } ?>
 		$.each(poiIcons, function (poiType, poiIcon) {
 			var info = { type: poiType, icon: poiIcon };
 			$("#editorToolsPoiTypes").append(poi_type_tool_item_template(info));
 		});
 		$(".poi_tool_item").click(function () {
 			addingPoiType = $(this).data('type');
+			map.setOptions({draggableCursor:'crosshair'});
+			$("#editorToolsPoiTypes").hide();
 		});
 		$("#editorTools").mouseover(function (ev) {
 			ev.stopPropagation();
@@ -57,6 +61,7 @@
 			    var marker = placeMarker(null, '', '', event.latLng, addingPoiType);
 			    google.maps.event.trigger(marker, 'click');
 			    addingPoiType = null;
+				map.setOptions({ draggableCursor: null});
 			}
 		});
 		initMarkers($("#content").data('postid'));
@@ -70,7 +75,11 @@
 	};
 
 	function placeMarker(postId, title, description, location, poiType) {
-		var markerObj = { postId: postId, markerId: maxMarkerId, title: title, descr: description, location: location, poiType: poiType };
+		var markerObj = {
+					postId: postId, markerId: maxMarkerId, 
+					title: title, descr: description, 
+					location: location, poiType: poiType,
+					firstOpen: (postId? false : true) };
 		markerModel[markerObj.markerId] = markerObj;
 		maxMarkerId++;
 
@@ -87,8 +96,21 @@
 			if (mapPointInfoWindow) {
 				mapPointInfoWindow.close();
 			}
-			mapPointInfoWindow = new google.maps.InfoWindow({content: 'Loading...'});
-			mapPointInfoWindow.setContent(marker_bubble_template(markerObj));
+
+			var infoBoxOptions = {
+				 content: marker_bubble_template(markerObj)
+				,disableAutoPan: false
+				,maxWidth: 0
+				,pixelOffset: new google.maps.Size(-217, -178)
+				,zIndex: null
+				,closeBoxMargin: "0px"
+				,closeBoxURL: ""
+				,infoBoxClearance: new google.maps.Size(1, 1)
+				,isHidden: false
+				,pane: "floatPane"
+				,enableEventPropagation: false
+			};
+			mapPointInfoWindow = new InfoBox(infoBoxOptions);
 			mapPointInfoWindow.open(map, this);
 
 			google.maps.event.addListener(mapPointInfoWindow, "domready", function() {
@@ -98,11 +120,16 @@
 					markerObj.title = markerEl.find('.mbubble_title').val();
 					markerObj.descr = markerEl.find('.mbubble_descr').val();
 					markerObj.poiType = markerEl.find('.poi_type_select.active').data('type');
+					markerObj.firstOpen = false;
 					marker.setIcon(poiIcons[markerObj.poiType]);
 					updateSaveMarkerAsync(markerObj);
 					mapPointInfoWindow.close();
 				});
 				markerEl.find('.mbubble_cancel').click(function () {
+					if (markerObj.firstOpen) {
+						delete markerModel[marker.markerId];
+						marker.setMap(null);
+					}
 					mapPointInfoWindow.close();
 				});
 				markerEl.find('.mbubble_remove').click(function () {
@@ -114,6 +141,13 @@
 				markerEl.find('.poi_type_select').click(function () {
 					markerEl.find('.poi_type_select').removeClass('active');
 					$(this).addClass('active');
+				});
+				markerEl.find(".poi_info_input_container").click(function () {
+					if ($(this).find('input').size() > 0) {
+						$(this).find('input').focus();
+					} else {
+						$(this).find('textarea').focus();
+					}
 				});
 			});
 		};
@@ -145,6 +179,9 @@
 			$.each(page.children, function (key, childData) {
 				var location = defaultLocation;
 				var poiType = childData.custom_fields['poiType'];
+				if (poiType == '' || poiType == null) {
+					poiType = poiTypes[0];
+				}
 				if (childData.custom_fields && childData.custom_fields['lat'] && childData.custom_fields['lng']) {
 					location = new google.maps.LatLng(childData.custom_fields['lat'], childData.custom_fields['lng']);
 				}
@@ -225,15 +262,49 @@
 
 <script type="text/html" id="marker_bubble_template">
 	<div id="bmarkerInfoWindow<%= markerId %>" class="poi_info_window">
-		title: <input type="text" class="mbubble_title" value="<%= title %>"></input><br/>
-		text: <textarea class="mbubble_descr"><%= descr %></textarea><br/>
-		<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
-			<div class="poi_type_select <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': '' %>"
-				data-type="<%= iterPoiType %>"></div>
-		<% }); %>
-		<input type="button" value="OK" class="mbubble_ok"></input>
-		<input type="button" value="Cancel" class="mbubble_cancel"></input>
-		<input type="button" value="Remove" class="mbubble_remove"></input>
+		<?php if (is_user_logged_in()) { ?>
+			<div class="poi_info_input_container">
+				<input type="text" class="mbubble_title" value="<%= title %>"></input>
+			</div>
+			<div class="poi_info_input_container">
+				<textarea class="mbubble_descr" rows="5"><%= descr %></textarea><br/>
+			</div>
+			<div class="poi_infobox_actions">
+				<input type="button" value="OK" class="mbubble_ok"></input>
+				<input type="button" value="Cancel" class="mbubble_cancel"></input>
+				<input type="button" value="Remove" class="mbubble_remove"></input>
+			</div>
+			<div class="poi_infobox_bottom_container">
+				<div class="poi_infobox_bottom_center">
+					<div class="poi_infobox_prev"></div>
+					<div class="poi_infobox_bottom_space"></div>
+					<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
+						<div class="poi_type_select <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': '' %>"
+							data-type="<%= iterPoiType %>"></div>
+					<% }); %>
+					<div class="poi_infobox_bottom_space"></div>
+					<div class="poi_infobox_next"></div>
+				</div>
+			</div>
+		<?php } else { ?>
+			title: <input type="text" class="mbubble_title" value="<%= title %>" disabled="disabled"></input><br/>
+			text: <textarea class="mbubble_descr" disabled="disabled"><%= descr %></textarea><br/>
+			<div class="poi_infobox_actions">
+				<input type="button" value="Close" class="mbubble_cancel"></input>
+			</div>
+			<div class="poi_infobox_bottom_container">
+				<div class="poi_infobox_bottom_center">
+					<div class="poi_infobox_prev"></div>
+					<div class="poi_infobox_bottom_space"></div>
+					<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
+						<div class="poi_type_view <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': '' %>"
+							></div>
+					<% }); %>
+					<div class="poi_infobox_bottom_space"></div>
+					<div class="poi_infobox_next"></div>
+				</div>
+			</div>
+		<?php } ?>
 	</div>
 </script>
 

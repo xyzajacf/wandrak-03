@@ -32,6 +32,7 @@
 
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/infobox_packed.js"></script>
 
 <script type="text/javascript">
   var wnd_ctaLayer = null;
