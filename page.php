@@ -116,6 +116,8 @@
 			mapPointInfoWindow.open(map, this);
 
 			google.maps.event.addListener(mapPointInfoWindow, "domready", function() {
+				infoBoxOptions.pixelOffset = new google.maps.Size(-217, -$(".poi_info_window").height());
+				mapPointInfoWindow.setOptions(infoBoxOptions);
 				var markerEl = $("#bmarkerInfoWindow" + marker.markerId);
 				markerEl.find('.mbubble_title').focus();
 				var okClickCallback = function () {
@@ -142,7 +144,9 @@
 					mapPointInfoWindow.close();
 				});
 				markerEl.find('.poi_infobox_prev').click(function () {
-					okClickCallback();
+					<?php if (is_user_logged_in()) { ?>
+						okClickCallback();
+					<?php } ?>
 
 					var nextMarker = null;
 					$.each(markerModel, function (markerItemMarkerId, markerItem) {
@@ -168,7 +172,9 @@
 					}
 				});
 				markerEl.find('.poi_infobox_next').click(function () {
-					okClickCallback();
+					<?php if (is_user_logged_in()) { ?>
+						okClickCallback();
+					<?php } ?>
 
 					var nextMarker = null;
 					$.each(markerModel, function (markerItemMarkerId, markerItem) {
@@ -203,12 +209,14 @@
 					markerEl.find('.poi_type_select.active').removeClass('notdisplayed');
 				});
 				markerEl.find('.poi_infobox_type_bar').mouseover(function (ev) {
-					markerEl.find('.poi_type_select').removeClass('notdisplayed');
-					markerEl.find('.poi_type_select').addClass('selecting');
-					var topOffsetpx = 55 * poiTypes.indexOf(markerObj.poiType);
-					$(this).css('top', '-' + topOffsetpx + 'px');
-					ev.stopPropagation();
-					return false;
+					<?php if (is_user_logged_in()) { ?>
+						markerEl.find('.poi_type_select').removeClass('notdisplayed');
+						markerEl.find('.poi_type_select').addClass('selecting');
+						var topOffsetpx = 55 * poiTypes.indexOf(markerObj.poiType);
+						$(this).css('top', '-' + topOffsetpx + 'px');
+						ev.stopPropagation();
+						return false;
+					<?php } ?>
 				});
 				markerEl.find(".poi_info_input_container").click(function () {
 					if ($(this).find('input').size() > 0) {
@@ -368,10 +376,12 @@
 				<div class="poi_infobox_bottom_center">
 					<div class="poi_infobox_prev"></div>
 					<div class="poi_infobox_bottom_space"></div>
-					<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
-						<div class="poi_type_view <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': 'notdisplayed' %>"
-							></div>
-					<% }); %>
+					<div class="poi_infobox_type_bar">
+						<% $.each(poiIcons, function (iterPoiType, iterPoiIcon) { %>
+							<div class="poi_type_view <%= iterPoiType %> <%= (iterPoiType == poiType) ? 'active': 'notdisplayed' %>"
+								></div>
+						<% }); %>
+					</div>
 					<div class="poi_infobox_bottom_space"></div>
 					<div class="poi_infobox_next"></div>
 				</div>
