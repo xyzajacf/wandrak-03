@@ -1,4 +1,4 @@
-<?php
+<?php header('Access-Control-Allow-Origin: *'); ?><?php
 /*
 Plugin Name: JSON API
 Plugin URI: http://wordpress.org/extend/plugins/json-api/
