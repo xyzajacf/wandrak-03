@@ -1,0 +1,26 @@
+<html>
+
+<body>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type="text/javascript">
+	var GET_PAGE_URL = 'http://192.168.192.128/?json=get_root_posts&count=-1';
+
+			$.ajax({
+		    url: GET_PAGE_URL,
+		    type: 'GET',
+		    dataType: 'json',
+		    success: initMarkersSuccess,
+		    error: initMarkersError
+		});
+
+	function initMarkersSuccess(data) {
+		$(".mydiv").html('hello');
+	}
+
+	function initMarkersError(param) {
+		alert('Failed to read data!');
+	}
+</script>
+</body>
+
+</html>

@@ -4,9 +4,6 @@ class JSON_API_Introspector {
   
   public function get_posts($query = false, $wp_posts = false) {
     global $post;
-    if ($query['parent'] == 'no_parent') {
-    	$query['parent'] = 0;
-    }
     $this->set_posts_query($query);
     $output = array();
     while (have_posts()) {

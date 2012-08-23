@@ -42,6 +42,13 @@ class JSON_API_Core_Controller {
     return $this->posts_result($posts);
   }
   
+  public function get_root_posts() {
+    global $json_api;
+    $posts = $json_api->introspector->get_posts(
+    						array( 'post_type' => 'page', 'post_parent' => 0 ));
+    return $this->posts_result($posts);
+  }
+  
   public function get_post() {
     global $json_api, $post;
     extract($json_api->query->get(array('id', 'slug', 'post_id', 'post_slug')));
