@@ -49,6 +49,7 @@ class JSON_API_Query {
       'post_slug' =>      'name',
       'page_id' =>        'page_id',
       'page_slug' =>      'name',
+      'parent' =>         'parent',
       'category_id' =>    'cat',
       'category_slug' =>  'category_name',
       'tag_id' =>         'tag_id',
