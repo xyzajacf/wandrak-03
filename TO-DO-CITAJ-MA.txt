@@ -27,7 +27,7 @@ MOB APPLIKACIA STORY:
 - Point - Ulozit: na stranku, Docasne v telefone
 
 MOB APPLIKACIA GRAFIKA:
-- Nakreslit ikonku
+- Nakreslit ikonku done
 - Nakreslit uvod
 - Nakreslit Stranku
 - Nakreslit Point
