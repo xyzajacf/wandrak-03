@@ -1,7 +1,7 @@
 /* CO TREBA SPRAVIT  */
 
 WORDPRESS:
-- Pri uploadovani do custom fields pridat moznost nastavit defaul map â€“ ROAD/SATELIE/TERAIN
+- Pri uploadovani do custom fields pridat moznost nastavit defaul mapâ ROAD/SATELIE/TERAIN
 - Pre neprihlaseneho moznost hide/show pre obsah stranky
 
 INFOBOX a MARKER:
@@ -9,7 +9,7 @@ INFOBOX a MARKER:
 - Infobox pre neprihlaseneho treba este upravit.
 - Nastilovat title / vyhodit ãtitle:Ó
 - Nastilovat text / vyhodit ãtext:Ó
-- Infobox nakreslit krizik namiesto close
+- Infobox nakreslit krizik namiesto close Ð[DONE]
 - Nakreslit vyber ikoniek z Add point a zmenit ikonku v Infoboxe
 - Pridat WYSIVYG editor do infoboxu
 - Pridat moznost vlozenia obrazku/videa.
@@ -27,7 +27,7 @@ MOB APPLIKACIA STORY:
 - Point - Ulozit: na stranku, Docasne v telefone
 
 MOB APPLIKACIA GRAFIKA:
-- Nakreslit ikonku done
+- Nakreslit ikonku Ð[DONE]
 - Nakreslit uvod
 - Nakreslit Stranku
 - Nakreslit Point
