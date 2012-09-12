@@ -11,10 +11,10 @@ INFOBOX a MARKER:
 - Nastilovat text / vyhodit ãtext:Ó
 - Infobox nakreslit krizik namiesto close Ð[DONE]
 - Nakreslit vyber ikoniek z Add point a zmenit ikonku v Infoboxe
-- Pridat WYSIVYG editor do infoboxu
+- Pridat WYSIVYG editor do infoboxu 
 - Pridat moznost vlozenia obrazku/videa.
 
-MOB APPLIKACIA STORY:
+MOB APPLIKACIA STORY: [Toto je len informacne]
 - Zapne sa apka
 - Uvod - Prihlasit sa do WP
 - Uvod - Zoznam nadradenych stranok
