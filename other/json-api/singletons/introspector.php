@@ -226,14 +226,16 @@ class JSON_API_Introspector {
     }
     return $attachments;
   }
-  
+
   public function attach_child_posts(&$post) {
     $post->children = array();
     $wp_children = get_posts(array(
       'post_type' => $post->type,
       'post_parent' => $post->id,
       'order' => 'ASC',
-      'orderby' => 'menu_order'
+      'orderby' => 'menu_order',
+      'paged' => false,
+      'posts_per_page' => -1
     ));
     foreach ($wp_children as $wp_post) {
       $post->children[] = new JSON_API_Post($wp_post);
@@ -278,8 +280,6 @@ class JSON_API_Introspector {
     
     $query = array_merge($query, $wp_query->query);
     
-    $query['paged'] = false;
-    $query['posts_per_page'] = -1;
     if ($json_api->query->page) {
       //$query['paged'] = $json_api->query->page;
       $query['paged'] = false;
@@ -289,6 +289,8 @@ class JSON_API_Introspector {
       //$query['posts_per_page'] = $json_api->query->count;
       $query['posts_per_page'] = 100;
     }
+    $query['paged'] = false;
+    $query['posts_per_page'] = -1;
     
     if ($json_api->query->post_type) {
       $query['post_type'] = $json_api->query->post_type;
