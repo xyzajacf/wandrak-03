@@ -1,0 +1,11 @@
+#E7DED1 - Text background (light)
+#393730 - Text color (dark)
+#355890 - Text link
+#1f52a3 - Text link:hover
+#1f52a3 - Text link:active
+#7597B2 - Text link:visited
+ -
+
+#393730 - Background (dark)
+#F8611C - Orange link
+#FE401E - Oragne link:hover (button pressed)
