@@ -4,6 +4,7 @@ class JSON_API_Introspector {
   
   public function get_posts($query = false, $wp_posts = false) {
     global $post;
+
     $this->set_posts_query($query);
     $output = array();
     while (have_posts()) {
@@ -277,12 +278,16 @@ class JSON_API_Introspector {
     
     $query = array_merge($query, $wp_query->query);
     
+    $query['paged'] = false;
+    $query['posts_per_page'] = -1;
     if ($json_api->query->page) {
-      $query['paged'] = $json_api->query->page;
+      //$query['paged'] = $json_api->query->page;
+      $query['paged'] = false;
     }
     
     if ($json_api->query->count) {
-      $query['posts_per_page'] = $json_api->query->count;
+      //$query['posts_per_page'] = $json_api->query->count;
+      $query['posts_per_page'] = 100;
     }
     
     if ($json_api->query->post_type) {
