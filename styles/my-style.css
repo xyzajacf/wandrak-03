@@ -465,8 +465,9 @@ p.a {
 
 
 
-input.mbubble_title {
+input[type="text"].mbubble_title {
 	font-height: 17px;
+	line-height:22px;
 	border: none;
 	background: transparent;
 }
