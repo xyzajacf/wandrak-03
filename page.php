@@ -367,10 +367,10 @@
 				</div>
 			</div>
 		<?php } else { ?>
-			title: <input type="text" class="mbubble_title" value="<%= title %>" disabled="disabled"></input><br/>
-			text: <textarea class="mbubble_descr" disabled="disabled"><%= descr %></textarea><br/>
+			 <input type="text" class="mbubble_title" value="<%= title %>" disabled="disabled"></input><br/>
+			 <div class="mbubble_descr" disabled="disabled"><%= descr %></div><br/>
 			<div class="poi_infobox_actions">
-				<input type="button" value="Close" class="mbubble_cancel"></input>
+				<input type="button" value=" " class="mbubble_cancel"></input>
 			</div>
 			<div class="poi_infobox_bottom_container">
 				<div class="poi_infobox_bottom_center">

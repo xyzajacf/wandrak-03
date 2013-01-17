@@ -240,7 +240,7 @@ a h2.preview {
 }
 
 /* TYPOGRAPHY */
-body {font-family: 'Georgia', serif; font-size:16px;line-height:22px;}
+body {font-family: 'Open Sans', serif; font-size:16px;line-height:22px;}
 h1 {
 	font-family: 'Open Sans',sans-serif;
 	font-size: 40px;
@@ -463,13 +463,25 @@ p.a {
 	cursor: text;
 }
 
-.mbubble_title, .mbubble_descr {
-	font-family: Georgia, Serif;
-	font-height: 16px;
-	font-syle: italic;
-	width: 406px;
+
+
+input.mbubble_title {
+	font-height: 17px;
 	border: none;
-	background: #E7DED1;
+	background: transparent;
+}
+
+.mbubble_descr {
+	font-height: 16px;
+	line-height:22px;
+	border: none;
+}
+
+.mbubble_cancel {
+	background: url('../images/close-infobox.png') no-repeat 50% 50% transparent;
+	padding:0px 7px;
+	border: none;
+	color:none;
 }
 
 #editorTools {
@@ -591,20 +603,23 @@ input.add_poi_button {
 	text-transform: uppercase;
 }
 #mapZoomIn {
-	background: url('../images/zoom-in.jpg');
-	width: 60px;
-	height: 60px;
+	background: url('../images/zoom_in.png') #393730;
+	width: 54px;
+	height: 54px;
 	position: fixed;
-	top: 72px;
+	top: 121px;
 	left: 0;
 }
 #mapZoomOut {
-	background: url('../images/zoom-out.jpg');
-	width: 60px;
-	height: 60px;
+	background: url('../images/zoom_out.png') #393730;
+	width: 54px;
+	height: 54px;
 	position: fixed;
-	top: 133px;
+	top: 176px;
 	left: 0;
+}
+#mapZoomIn:hover,#mapZoomOut:hover {
+	background-color:#282722;
 }
 #mapToolsType {
 	position: fixed;
